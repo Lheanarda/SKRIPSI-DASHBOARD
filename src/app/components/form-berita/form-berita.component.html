@@ -1,0 +1,110 @@
+<form>
+  <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Berita</mat-card-title>
+
+  <mat-dialog-content>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <mat-form-field class="full-width">
+          <mat-label>Kode Berita</mat-label>
+          <input matInput type="text">
+          <mat-hint>Input kode berita</mat-hint>
+          <mat-error>Kode berita is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field class="full-width">
+          <mat-label>Judul Berita</mat-label>
+          <input matInput type="text"/>
+          <mat-hint>Input judul berita</mat-hint>
+          <mat-error>Judul berita is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field class="full-width">
+          <mat-label>Foto Thumbnail Berita</mat-label>
+          <ngx-mat-file-input placeholder="Upload foto thumbnail berita"></ngx-mat-file-input>
+          <mat-icon matSuffix>cloud_upload</mat-icon>
+          <mat-hint>Input thumbnail berita</mat-hint>
+          <mat-error>thumbnail berita is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Tanggal Berita</mat-label>
+          <input matInput [matDatepicker]="mdate" />
+          <mat-datepicker-toggle [for]="mdate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #mdate startview="year"></mat-datepicker>
+          <mat-hint>Input tanggal berita</mat-hint>
+          <mat-error>Tanggal berita is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Sumber berita</mat-label>
+          <input type="text" matInput/>
+          <mat-hint>Input sumber berita</mat-hint>
+          <mat-error>sumber berita is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Kategori Berita</mat-label>
+          <mat-select>
+            <mat-option value="W01">KODE NAMA</mat-option>
+            <mat-option value="W02">KODE NAMA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Kabupaten</mat-label>
+          <mat-select>
+            <mat-option value="W01">KODE NAMA</mat-option>
+            <mat-option value="W02">KODE NAMA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Kegiatan</mat-label>
+          <mat-select>
+            <mat-option value="W01">KODE NAMA</mat-option>
+            <mat-option value="W02">KODE NAMA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <mat-form-field class="full-width">
+          <mat-label>Isi Berita</mat-label>
+          <textarea matInput></textarea>
+          <mat-hint>Input isi berita</mat-hint>
+          <mat-error>Isi berita is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+  </mat-dialog-content>
+
+  <div class="row">
+    <div class="buttons full-width">
+      <button mat-button mat-raised-button mat-dialog-close>Close</button>
+      <button mat-button mat-raised-button type="reset" >Reset</button>
+      <button mat-button mat-raised-button>Submit</button>
+    </div>
+  </div>
+</form>

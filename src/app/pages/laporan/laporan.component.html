@@ -1,0 +1,134 @@
+<app-navigation>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Laporan Frekuensi Rencana Perjalanan
+        </mat-panel-title>
+        <mat-panel-description>
+          <div></div>
+          <mat-icon>tour</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- ISI PANEL  -->
+      <div class="mb-5">
+        <canvas
+        baseChart
+        [datasets]="wisatawanChartData"
+        [labels]="wisatawanChartLabels"
+        [options]="wisatawanChartOptions"
+        [legend]="wisatawanChartLegend"
+        [chartType]="wisatawanChartType"></canvas>
+        <p>Grafik Perkembangan Jumlah Pengguna Aplikasi</p>
+      </div>
+
+
+      <div style="display: flex;" class="mb-5">
+        <div style="width: 50%;">
+          <canvas
+          baseChart
+          [datasets]="modeChartData"
+          [labels]="modeChartLabels"
+          [options]="modeChartOptions"
+          [legend]="modeChartLegend"
+          [chartType]="modeChartType"></canvas>
+          <p>Grafik Perkembangan Pilihan Pengguna Dalam Penentuan Perjalanan</p>
+        </div>
+
+        <div style="width: 50%;">
+          <canvas
+          baseChart
+          [data]="kabupatenwChartData"
+          [labels]="kabupatenwChartLabels"
+          [chartType]="kabupatenwChartType"></canvas>
+          <p>Grafik Kabupaten yang Popular</p>
+        </div>
+      </div>
+
+      <div style="display: flex;">
+        <div style="width: 50%;">
+          <canvas
+          baseChart
+          [data]="awalChartData"
+          [labels]="awalChartLabels"
+          [chartType]="awalChartType"></canvas>
+          <p>Grafik Destinasi Awal Yang Popular</p>
+        </div>
+        <div style="width: 50%;">
+          <canvas
+          baseChart
+          [data]="tujuanChartData"
+          [labels]="tujuanChartLabels"
+          [chartType]="tujuanChartType"></canvas>
+          <p>Grafik Destinasi Tujuan Yang Popular</p>
+        </div>
+      </div>
+
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Laporan Sebaran dan Detail Obyek Wisata
+        </mat-panel-title>
+        <mat-panel-description>
+          <div></div>
+          <mat-icon>explore</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- ISI PANEL  -->
+      <div class="laporan-wisata">
+        <div style="width:50%">
+          <canvas
+          class="wisata"
+          baseChart
+          [datasets]="wisataChartData"
+          [labels]="wisataChartLabels"
+          [options]="wisataChartOptions"
+          [legend]="wisataChartLegend"
+          [chartType]="wisataChartType"></canvas>
+          <p>Grafik Perkembangan Jumlah Obyek Wisata </p>
+        </div>
+
+        <div style="width: 50%;">
+          <canvas
+          class="kabupaten"
+          baseChart
+          [data]="kabupatenChartData"
+          [labels]="kabupatenChartLabels"
+          [chartType]="kabupatenChartType"></canvas>
+          <p>Grafik Jumlah Wisata Per Kabupaten</p>
+        </div>
+
+      </div>
+
+    </mat-expansion-panel>
+
+
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Laporan Berita dan Kegiatan
+        </mat-panel-title>
+        <mat-panel-description>
+          <div></div>
+          <mat-icon>article</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <!-- ISI PANEL  -->
+      <canvas
+      baseChart
+      [datasets]="beritaChartData"
+      [labels]="beritaChartLabels"
+      [options]="beritaChartOptions"
+      [legend]="beritaChartLegend"
+      [chartType]="beritaChartType"></canvas>
+
+      <p>Grafik Perkembangan Jumlah Berita dan Kegiatan</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</app-navigation>

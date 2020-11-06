@@ -1,0 +1,114 @@
+
+<div class="mb-4" [@flyIn]>
+  <mat-card>
+    <mat-card-content >
+      <h1>{{title | titlecase }} List</h1>
+      <div class="delete-indicator" *ngIf="deleteLoading">
+        <mat-progress-bar mode="indeterminate" class="delete-indicator__bar"></mat-progress-bar>
+        <p class="delete-indicator__text">Deleting...</p>
+      </div>
+      <hr>
+      <div class="row">
+        <!-- filter by status -->
+        <div class="col-md-6">
+          <button
+            *ngIf="selection.selected.length>0"
+            mat-raised-button
+            (click)="openDialogDelete('bulk', this.selection.selected)"
+            class="btn-delete"
+            color="accent">DELETE</button>
+          <mat-form-field class="col-sm-6">
+            <mat-label>Search</mat-label>
+            <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Filter" >
+
+            <mat-hint>Search in all fields</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <button
+          mat-raised-button
+          (click)="onManipulate('new')"
+          class="float-right mt-2 btn-new"
+          color="primary"> New {{title}}</button>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-content>
+
+      <div >
+        <mat-table [dataSource]="dataSource" matSort >
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select" sticky>
+            <mat-header-cell mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let row">
+              <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+              [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Position Column -->
+          <div *ngFor="let displayedColumn of filterDisplayedColumns();let idx = index" >
+              <ng-container matColumnDef={{displayedColumn}} >
+                  <mat-header-cell *matHeaderCellDef  mat-sort-header> {{headerColumns[idx]}} </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <div
+                    *ngIf="
+                    !helperConditionListTable(displayedColumn,'kabupatenFOTOICON') &&
+                    !helperConditionListTable(displayedColumn,'obyekFOTO') &&
+                    !helperConditionListTable(displayedColumn,'beritaGAMBAR') &&
+                    !helperConditionListTable(displayedColumn,'eventPOSTER')"
+
+                    class="display-values">
+                      {{element[displayedColumn]}}
+                    </div>
+                    <img *ngIf="
+                    helperConditionListTable(displayedColumn,'kabupatenFOTOICON') ||
+                    helperConditionListTable(displayedColumn,'obyekFOTO') ||
+                    helperConditionListTable(displayedColumn,'beritaGAMBAR') ||
+                    helperConditionListTable(displayedColumn,'eventPOSTER') "
+                          src={{element[displayedColumn]}} alt="Foto" class="column_picture"/>
+                  </mat-cell>
+              </ng-container>
+          </div>
+          <ng-container matColumnDef="update" stickyEnd>
+            <mat-header-cell *matHeaderCellDef > Update </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <a (click)="onManipulate('edit',element.id)" class="icon-click-update">
+                <mat-icon >edit</mat-icon>
+              </a>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="delete" stickyEnd>
+            <mat-header-cell *matHeaderCellDef > Delete </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <a (click)="openDialogDelete('one', element[readDeleteId()])" class="icon-click-delete" style="color: var(--color-red); cursor: pointer;">
+                <mat-icon >delete</mat-icon>
+              </a>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[10,20,40]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+</div>
+

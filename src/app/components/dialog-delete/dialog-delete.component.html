@@ -1,0 +1,16 @@
+<div class="delete__container">
+  <div class="delete__icon">
+    <mat-icon>clear</mat-icon>
+  </div>
+  <h1 class="delete__confirm">Are you sure?</h1>
+  <p class="delete__text" *ngIf="(data.mode==='one')">
+    Do you really want to delete {{data.title}} with ID {{data.id}} ? This process cannot be undone.
+  </p>
+  <p class="delete__text" *ngIf="(data.mode==='bulk')">
+    Do you really want to delete selected {{data.title}}(s) ? This process cannot be undone.
+  </p>
+  <div class="delete__buttons">
+    <button class="delete__buttons--cancel" mat-dialog-close mat-dialog-close="false">Cancel</button>
+    <button class="delete__buttons--delete" mat-dialog-close mat-dialog-close = "true">Delete</button>
+  </div>
+</div>

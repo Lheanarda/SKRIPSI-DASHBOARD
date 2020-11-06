@@ -1,0 +1,72 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Pesona Jawa</mat-toolbar>
+    <div class="user">
+      <div class="user__name">Alexander Leonardo Kurniawan</div>
+      <div class="user__email">alexanderleo0499@gmail.com</div>
+    </div>
+
+
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/laporan" routerLinkActive="nav--active">
+        <mat-icon matListIcon>leaderboard</mat-icon>
+        <div class="nav-item">Laporan</div>
+      </a>
+      <mat-list-item (click)="navigationState.domain = !navigationState.domain">
+        <mat-icon matListIcon>domain</mat-icon>
+        <div [class]="navigationState.domain ? 'nav-item nav-active' : 'nav-item'" >Domain</div>
+        <mat-icon class="arrow" >chevron_right</mat-icon>
+      </mat-list-item>
+      <mat-list [class]="navigationState.domain ? 'items items--active' : 'items'">
+        <mat-list-item routerLink="/kabupaten"routerLinkActive="nav--active">Kabupaten</mat-list-item>
+        <mat-list-item routerLink="/kecamatan" routerLinkActive="nav--active">Kecamatan</mat-list-item>
+      </mat-list>
+
+      <mat-list-item (click)="navigationState.wisata = !navigationState.wisata">
+        <mat-icon matListIcon>tour</mat-icon>
+        <div [class]="navigationState.wisata ? 'nav-item nav-active' : 'nav-item'" >Wisata</div>
+        <mat-icon class="arrow">chevron_right</mat-icon>
+      </mat-list-item>
+
+      <mat-list [class]="navigationState.wisata ? 'items items--active' : 'items'">
+        <mat-list-item routerLink="/kategori-wisata" routerLinkActive="nav--active">Kategori Wisata</mat-list-item>
+        <mat-list-item routerLink="/wisata" routerLinkActive="nav--active">Obyek Wisata</mat-list-item>
+        <mat-list-item routerLink="/jarak" routerLinkActive="nav--active">Jarak Antar Wisata</mat-list-item>
+        <mat-list-item routerLink="/fasilitas" routerLinkActive="nav--active">Fasilitas</mat-list-item>
+      </mat-list>
+
+      <mat-list-item (click)="navigationState.berita = !navigationState.berita">
+        <mat-icon matListIcon>article</mat-icon>
+        <div [class]="navigationState.berita ? 'nav-item nav-active' : 'nav-item'">Berita & Kegiatan</div>
+        <mat-icon class="arrow">chevron_right</mat-icon>
+      </mat-list-item>
+
+      <mat-list [class]="navigationState.berita ? 'items items--active' : 'items'">
+        <mat-list-item routerLink="/kategori-berita" routerLinkActive="nav--active">Kategori Berita</mat-list-item>
+        <mat-list-item routerLink="/berita" routerLinkActive="nav--active">Berita</mat-list-item>
+        <mat-list-item routerLink="/kegiatan" routerLinkActive="nav--active">Kegiatan</mat-list-item>
+      </mat-list>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="main-toolbar">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Travel Itinerary Dashboard</span>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <div class="content">
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

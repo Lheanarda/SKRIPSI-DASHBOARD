@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+:root{
+  //colors
+  --color-bg:#e9eaef;
+  --color-red:#eb2f64;
+  --color-primary: #55c57a; //green
+  --color-primary-light: #7ed56f; //light green
+  --color-primary-dark: #28b485; //dark green
+
+  --color-secondary-light: #ffb900;
+  --color-secondary-dark: #ff7730;
+
+  --color-tertiary-light: #2998ff;
+  --color-tertiary-dark: #5643fa;
+
+  --color-grey-light-1:#f7f7f7;
+  --color-grey-light-2 : #eee;
+
+  --color-grey-dark:#777;
+  --color-grey-dark-2:#999;
+  --color-grey-dark-3:#333;
+
+}
+html{
+  font-size: 62.5%;
+}
+body {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.full-width{
+  width: 100%;
+}
+
+mat-card-title{
+  color: var(--color-primary-dark);
+}
+
+
+.buttons{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
+  button{
+    &:not(:last-child){
+      margin-right: 1rem;
+    }
+  }
+
+}
+form{
+  min-width: 60vw;
+}
+

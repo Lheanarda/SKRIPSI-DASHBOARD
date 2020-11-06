@@ -1,0 +1,80 @@
+.delete__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 35rem;
+}
+
+.delete__icon{
+  font-size: 7rem;
+  margin-right: 12%;
+}
+
+.delete__icon mat-icon{
+  color: var(--color-red);
+  font-size: inherit;
+}
+
+.delete__confirm{
+  margin-top: 3rem;
+  color: var(--color-grey-dark);
+  font-weight: 400;
+  font-size: 2.4rem;
+}
+
+.delete__text{
+  margin-top: 1.3rem;
+  color: var(--color-grey-dark-2);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.delete__buttons{
+  margin-top: 1.3rem;
+  display: flex;
+  justify-content: space-around;
+  width: 58%;
+}
+
+
+.delete__buttons--cancel{
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-grey-dark-2);
+  padding: 1.4rem 2rem;
+  color: #fff;
+  text-transform: uppercase;
+  transition: all .2s;
+
+  &:focus{
+    outline: none;
+  }
+}
+
+.delete__buttons--delete{
+  border: none;
+  border-radius: 3px;
+  background-color: var(--color-red);
+  padding: 1.4rem 2rem;
+  color: #fff;
+  text-transform: uppercase;
+  transition: all .2s;
+
+  &:focus{
+    outline: none;
+  }
+}
+
+.delete__buttons--delete:hover,
+.delete__buttons--cancel:hover{
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,0.25);
+}
+
+.delete__buttons--delete:active,
+.delete__buttons--cancel:active{
+  transform: translateY(0) scale(1);
+  box-shadow: 0 1rem 2.5rem rgba(0,0,0,0.2);
+}

@@ -1,0 +1,115 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 240px;
+  background-image: linear-gradient(to top, var(--color-primary-light), var(--color-primary-dark));
+  color: white;
+  box-sizing: border-box;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+  color: white;
+  display: flex;
+  padding-left: 2rem;
+  align-items: center;
+  font-size: 2.4rem;
+}
+
+mat-nav-list{
+  padding-left: 1rem;
+  a,
+  mat-list-item{
+    color: white;
+    position: relative;
+    mat-icon{
+      margin-right: 1rem;
+    }
+  }
+}
+
+.nav-active + .arrow{
+  transform: rotate(90deg);
+}
+
+.nav--active{
+  background-color: white;
+  color: black !important;
+  font-weight: 500;
+  &:hover{
+    background-color: white;
+    color: black !important;
+  }
+}
+
+.items{
+  margin-left: 4rem;
+  transition: all .2s;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .1s;
+  &--active{
+    opacity: 1;
+    visibility: visible;
+    max-height: max-content;
+  }
+}
+
+
+.list-item{
+  margin-left: 4rem;
+}
+.arrow{
+  position: absolute;
+  right: 0;
+  transition: all .2s;
+}
+
+.user{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 2rem;
+  &__name{
+    font-weight: 500;
+    margin-top: 1rem;
+  }
+
+  &__email{
+    margin-top: 1rem;
+    font-weight: 300;
+  }
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+
+.main-toolbar{
+  background-color: var(--color-bg);
+  position: absolute;
+
+  button{
+    transition: all .2s;
+    &:hover{
+      background-color: #d4d5d6;
+    }
+  }
+  span{
+    margin-left: 2rem;
+  }
+}
+
+.content{
+  box-sizing: border-box;
+  padding: 5rem;
+  padding-top: 10rem;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+}

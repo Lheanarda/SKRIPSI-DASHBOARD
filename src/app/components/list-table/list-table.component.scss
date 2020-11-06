@@ -1,0 +1,85 @@
+
+.mat-table {
+  overflow-x: scroll;
+}
+
+.mat-cell,
+.mat-header-cell {
+word-wrap: initial;
+display: table-cell;
+padding: 0px 10px;
+line-break: unset;
+width: 100%;
+white-space: nowrap;
+overflow: hidden;
+vertical-align: middle;
+border-bottom: 1px solid #c5c5c5;
+}
+.mat-row,
+.mat-header-row {
+display: table-row;
+}
+
+
+mat-card-content h1{
+color: #28b485;
+}
+
+mat-card-content .btn-new{
+background-color:#28b485;
+}
+
+.btn-delete{
+  margin-right: 1rem;
+  transform: translateY(17%);
+}
+
+.icon-click-update,
+.icon-click-update:visited{
+  color:var(--color-primary-dark);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.icon-click-update:hover{
+  color: var(--color-primary-light) !important;
+}
+
+.icon-click-delete:link,
+.icon-click-delete:visited{
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.icon-click-delete:hover{
+  color: var(--color-red-light) !important;
+}
+
+.column_picture{
+  width: 100%;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+
+
+
+.delete-indicator{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  position: absolute;
+  right: 1.5rem;
+  top: 2rem;
+  &__bar{
+
+  }
+
+  &__text{
+    color: var(--color-grey-dark);
+    font-size: 1rem;
+    align-self: flex-end;
+  }
+}

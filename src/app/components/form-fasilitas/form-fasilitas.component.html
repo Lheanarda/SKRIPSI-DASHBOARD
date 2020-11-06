@@ -1,0 +1,32 @@
+<form>
+  <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Fasilitas</mat-card-title>
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <mat-form-field class="full-width" >
+        <mat-label>Nama Fasilitas</mat-label>
+        <input matInput type="text">
+        <mat-hint>Input nama fasilitas</mat-hint>
+        <mat-error>nama fasilitas is required</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <mat-form-field class="full-width" >
+        <mat-label>Kegunaan Fasilitas</mat-label>
+        <input matInput type="text">
+        <mat-hint>Input kegunaan fasilitas</mat-hint>
+        <mat-error>kegunaan fasilitas is required</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="buttons full-width">
+      <button mat-button mat-raised-button mat-dialog-close>Close</button>
+      <button mat-button mat-raised-button type="reset" >Reset</button>
+      <button mat-button mat-raised-button>Submit</button>
+    </div>
+  </div>
+</form>
