@@ -1,0 +1,193 @@
+/* BACKGROUND */
+.auth-background{
+  background-image: linear-gradient(to left bottom, var(--color-primary-light), var(--color-primary-dark));
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* CONTAINER */
+.auth__container{
+  padding: 15rem 0;
+  background-color: #fff;
+  width: 80vw;
+  height: 70vh;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba(#000,.2);
+  background-image:
+  linear-gradient(78deg, transparent 50%, rgba(255,255,255,.9) 50% ),
+  url(https://www.gogonesia.com/img/city/jawatengah-1427352345.jpg);
+  background-size: cover;
+  position: relative;
+}
+/* RIGHT SIDE CONTENT */
+.auth__form{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 46%;
+  height: 92%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+/* TITLE */
+.auth__form-title{
+  margin-top: -1rem;
+  font-size: 3rem;
+  text-transform: uppercase;
+  width: max-content;
+  font-weight: 700;
+  background-image: linear-gradient(to right, var(--color-primary-light), var(--color-primary-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: .2rem;
+}
+
+/* FORM CONTENT */
+.auth__form--form{
+  display: flex;
+  flex-direction: column;
+}
+
+/* ERROR MESSAGE */
+.auth__form--err{
+  margin: 0 auto;
+  color: var(--color-red-light);
+}
+
+/* BUTTON */
+.auth__btn--submit{
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 1.5rem 4rem;
+  font-size: 1.6rem;
+  border-radius: 10rem;
+  background-color: var(--color-primary);
+  color: #fff;
+  align-self: flex-end;
+  margin-right: 10%;
+  margin-top: 2vw;
+  position: relative;
+  transition: all .2s;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  outline: none;
+}
+
+/* BUTTON DISABLED STATE */
+.auth__btn--disabled{
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 1.5rem 4rem;
+  font-size: 1.6rem;
+  border-radius: 10rem;
+  background-color: var(--color-grey-light-3);
+  color: #fff;
+  align-self: flex-end;
+  margin-right: 10%;
+  margin-top: 2vw;
+  position: relative;
+  transition: all .2s;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* BUTTON ARROW */
+.auth__btn--arrow{
+  margin-left: .5rem;
+  transition: all .2s;
+}
+
+/* BUTTON TEXT */
+.auth__btn--text{
+  margin-top:-3px;
+}
+
+/* LOADING */
+
+
+/* BUTTON HOVER */
+.auth__btn--submit:hover:enabled{
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,0.3);
+  outline: none;
+}
+
+/* BUTTON ACTIVE STATE */
+.auth__btn--submit:active:enabled{
+  transform: scale(1) translateY(0);
+  box-shadow: 0 1rem 3rem rgba(0,0,0,0.25);
+  background-color: var(--color-primary);
+  outline: none;
+}
+
+/* BREAKPOINTS 1200PX */
+@media only screen and (max-width:1200px){
+  .auth__container{
+    background-image:
+    linear-gradient(78deg, transparent 40%, rgba(255,255,255,.9) 40% ),
+    url('http://www.enseval.com/wp-content/uploads/2019/07/Web-3b.jpg');
+  }
+  .auth__form{
+    width: 55%;
+  }
+}
+
+/* BREAKPOINTS 950PX */
+@media only screen and (max-width:950px){
+  .auth__container{
+    background-image:
+    linear-gradient(78deg, transparent 30%, rgba(255,255,255,.9) 30% ),
+    url('http://www.enseval.com/wp-content/uploads/2019/07/Web-3b.jpg');
+  }
+
+  .auth__form{
+    width: 65%;
+  }
+}
+
+/* BREAKPOINTS 800px */
+@media only screen and (max-width:800px){
+  .auth__container{
+    background-image:
+    linear-gradient(78deg, transparent 0%, rgba(255,255,255,.9) 0%),
+    url('http://www.enseval.com/wp-content/uploads/2019/07/Web-3b.jpg');
+  }
+
+  .auth__form{
+    width: 100%;
+    padding:2rem;
+    padding-left: 7rem;
+  }
+}
+
+/* BREAKPOINTS 550PX */
+@media only screen and (max-width: 550px){
+  .auth__form{
+    padding-left:2rem;
+    width: 100%;
+  }
+  .auth__btn--submit{
+    margin-right: 1%;
+  }
+
+
+}
+
+/* BREAKPOINTS 400px */
+@media only screen and (max-width: 400px){
+  .auth__form-title{
+    width: min-content;
+  }
+}

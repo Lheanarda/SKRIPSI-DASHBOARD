@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Kecamatan } from 'src/app/model/kecamatan.model';
+import { Kecamatan } from './../../model/kecamatan.model';
+import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { KecamatanService } from 'src/app/services/kecamatan.service';
 
 @Component({
@@ -7,10 +8,12 @@ import { KecamatanService } from 'src/app/services/kecamatan.service';
   templateUrl: './kecamatan.component.html',
   styleUrls: ['./kecamatan.component.scss']
 })
-export class KecamatanComponent implements OnInit {
+export class KecamatanComponent implements OnInit,OnDestroy {
 
   //data source
   kecamatan:Kecamatan[];
+  load:Boolean;
+  kecamatanSubs:Subscription;
 
   //displayed data
   displayedColumn:string[]=[
@@ -20,6 +23,8 @@ export class KecamatanComponent implements OnInit {
     'kecamatanALAMAT',
     'kecamatanKET',
     'kabupatenKODE',
+    'create_date',
+    'update_date',
     'update',
     'delete'
   ];
@@ -31,6 +36,8 @@ export class KecamatanComponent implements OnInit {
     'Alamat Kecamatan',
     'Keterangan Kecamatan',
     'Kode Kabupaten',
+    'Create Date',
+    'Update Date',
     'Update',
     'Delete'
   ]
@@ -38,7 +45,17 @@ export class KecamatanComponent implements OnInit {
   constructor(private kecService:KecamatanService) { }
 
   ngOnInit() {
-    this.kecamatan = this.kecService.kecamatan;
+    this.load = true;
+    this.kecService.getAllKecamatan();
+    this.kecamatanSubs = this.kecService.loadKecamatan.subscribe((data:Kecamatan[])=>{
+      this.load = false;
+      this.kecamatan=data;
+    })
+  }
+
+  ngOnDestroy(){
+    console.log('Kecamatan page destroyed');
+    this.kecamatanSubs.unsubscribe();
   }
 
 }

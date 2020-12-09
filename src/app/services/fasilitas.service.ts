@@ -1,3 +1,4 @@
+import { FasilitasObyek } from './../model/fasilitas-obyek.model';
 import { Injectable } from '@angular/core';
 import { Fasilitas } from '../model/fasilitas.model';
 
@@ -16,6 +17,16 @@ fasilitass:Fasilitas[]=[
     fasilitasKODE:'FS02',
     fasilitasNAMA:'Restaurant (Rumah Makan)',
     fasilitasGUNA:'Sebagai sarana yang disediakan obyek wisata untuk menyediakan sarana makan siang maupun malam '
+  }
+]
+
+fasilitasObyeks:FasilitasObyek[]=[
+  {
+    fasilitasKODE:'FS01',
+    obyekKODE:'W01',
+    fasilitasNAMA:'Tempat Parkir',
+    fasilitasobyekKET:'Tempat Parkir Wisata Candi Borobudur',
+    obyekNAMA:'Candi Borobudur'
   }
 ]
 

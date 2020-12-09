@@ -1,0 +1,49 @@
+<form class="form-modal">
+  <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Fasilitas Obyek Wisata</mat-card-title>
+
+  <mat-dialog-content>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Obyek Wisata</mat-label>
+          <mat-select required>
+            <mat-option value="test0">KODE NAMA</mat-option>
+            <mat-option value="test1">KODE NAMA</mat-option>
+          </mat-select>
+          <mat-hint>Pilih Obyek Wisata</mat-hint>
+          <mat-error>obyek wisata is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Fasilitas</mat-label>
+          <mat-select required>
+            <mat-option value="test1">KODE NAMA</mat-option>
+            <mat-option value="test2">KODE NAMA</mat-option>
+          </mat-select>
+          <mat-hint>Pilih fasilitas</mat-hint>
+          <mat-error>fasilitas is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+       <mat-form-field class="full-width">
+         <mat-label>Keterangan Fasilitas Wisata</mat-label>
+         <input matInput />
+         <mat-hint>Input keterangan fasilitas wisata</mat-hint>
+       </mat-form-field>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <div class="row">
+    <div class="buttons full-width">
+      <button mat-button mat-raised-button mat-dialog-close>Close</button>
+      <button mat-button mat-raised-button type="reset" >Reset</button>
+      <button mat-button mat-raised-button>Submit</button>
+    </div>
+  </div>
+</form>

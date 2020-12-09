@@ -3,5 +3,5 @@ export interface Kecamatan{
   kecamatanNAMA:string,
   kecamatanALAMAT:string,
   kecamatanKET:string,
-  kabupatenKODE:string
+  kabupatenKODE:string,
 }

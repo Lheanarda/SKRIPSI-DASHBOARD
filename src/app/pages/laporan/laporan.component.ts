@@ -43,47 +43,18 @@ export class LaporanComponent implements OnInit {
 
 
   //LAPORAN FREKUENSI RENCANA PERJALANAN
-  //jumlah wisatawan
-  wisatawanChartOptions={
+  rencanaChartOptions={
     scaleShowVerticalLines:true,
     responsive:true
   }
-  wisatawanChartLabels=['Nov 2020','Des 2020','Jan 2021','Feb 2021'];
-  wisatawanChartType='line';
-  wisatawanChartLegend=true;
+  rencanaChartLabels=['Nov 2020','Des 2020','Jan 2021','Feb 2021'];
+  rencanaChartType='bar';
+  rencanaChartLegend=true;
 
-  wisatawanChartData=[
-    {data:[10,20,32,62], label:'Jumlah Pengguna'}
+  rencanaChartData=[
+    {data:[25,40,32,62], label:'Pengguna'},
+    {data:[10,16,23,8], label:'Jumlah Rencana'}
   ];
-
-  //perkembangan mode yang sering dipakai
-  modeChartOptions={
-    scaleShowVerticalLines:true,
-    responsive:true
-  }
-  modeChartLabels=['Nov 2020','Des 2020','Jan 2021','Feb 2021'];
-  modeChartType='bar';
-  modeChartLegend=true;
-
-  modeChartData=[
-    {data:[25,40,32,62], label:'Reccomendation'},
-    {data:[10,16,23,8], label:'Start to End'}
-  ];
-
-  //kabupaten yang sering digunakan
-  kabupatenwChartLabels = ['Kabupaten Sleman','Kabupaten Bantul', 'Kabupaten Magelang','Kabupaten Boyolali', 'Kabupaten Wonogiri', 'Other'];
-  kabupatenwChartData = [20,15,33,66,47,2];
-  kabupatenwChartType="doughnut";
-
-  //tempat awal
-  awalChartLabels = ['Waduk Gajah Mungkur','Candi Prambanan', 'Candi Borobudur','Candi Mendut', 'Museum Karst', 'Other'];
-  awalChartData = [20,15,33,66,47,2];
-  awalChartType="pie";
-
-  //tujuan
-  tujuanChartLabels = ['Goa Putri Kencono','Air Terjun Grojogan Sewu', 'Bukit Sekipan','Candi Cetho', 'Kampung Batik Griloyo', 'Other'];
-  tujuanChartData = [20,15,38,40,30,2];
-  tujuanChartType="pie";
 
 
   //expansion control

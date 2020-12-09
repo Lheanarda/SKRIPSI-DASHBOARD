@@ -1,0 +1,77 @@
+.form-group{
+  position: relative;
+}
+.form-group:not(:last-child){
+  margin-bottom: 2rem;
+}
+
+.form-input{
+  font-size: 1.5rem;
+  border: none;
+  font-family: inherit;
+  padding: 1.5rem 2rem;
+  border-radius: 2px;
+  background-color: rgba(255,255,255, 0.5);
+  box-shadow: 0 1rem 4rem rgba(0,0,0,0.1);
+  width: 90%;
+  display: block;
+  border-bottom: 3px solid transparent;
+  transition: all .2s;
+}
+
+.form-input:focus,
+.form-input:focus:valid{
+  box-shadow: 0 1rem 4rem rgba(0,0,0,0.18);
+  border-bottom: 3px solid var(--color-primary);
+  outline: none;
+}
+
+.form-input:focus:invalid{
+  border-bottom: 3px solid var(--color-red-light);
+}
+
+
+.form-label{
+  color: var(--color-primary-dark);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-left: 2rem;
+  margin-top: .7rem;
+  display: block;
+  transition: all .3s;
+}
+
+.form-input:placeholder-shown ~ .form-label{
+  opacity: 0;
+  transform: translateY(-4rem);
+  visibility: hidden;
+}
+
+.form-input--visibility{
+  color: var(--color-primary-dark);
+  position: absolute;
+  top:.5rem;
+  right: 10%;
+}
+
+.form-input--clear{
+  position: absolute;
+  color: var(--color-primary-light);
+  top:.5rem;
+}
+
+.form-input--visibility:focus,
+.form-input--clear:focus{
+  outline: none;
+}
+
+/* BREAKPOINTS 550PX */
+@media only screen and (max-width: 550px){
+  .form-input{
+    width: 100%;
+  }
+  .form-input--visibility{
+    right: 0;
+  }
+}
+

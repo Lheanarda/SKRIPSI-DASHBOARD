@@ -12,58 +12,15 @@
       </mat-expansion-panel-header>
 
       <!-- ISI PANEL  -->
-      <div class="mb-5">
-        <canvas
-        baseChart
-        [datasets]="wisatawanChartData"
-        [labels]="wisatawanChartLabels"
-        [options]="wisatawanChartOptions"
-        [legend]="wisatawanChartLegend"
-        [chartType]="wisatawanChartType"></canvas>
-        <p>Grafik Perkembangan Jumlah Pengguna Aplikasi</p>
-      </div>
+      <canvas
+      baseChart
+      [datasets]="rencanaChartData"
+      [labels]="rencanaChartLabels"
+      [options]="rencanaChartOptions"
+      [legend]="rencanaChartLegend"
+      [chartType]="rencanaChartType"></canvas>
 
-
-      <div style="display: flex;" class="mb-5">
-        <div style="width: 50%;">
-          <canvas
-          baseChart
-          [datasets]="modeChartData"
-          [labels]="modeChartLabels"
-          [options]="modeChartOptions"
-          [legend]="modeChartLegend"
-          [chartType]="modeChartType"></canvas>
-          <p>Grafik Perkembangan Pilihan Pengguna Dalam Penentuan Perjalanan</p>
-        </div>
-
-        <div style="width: 50%;">
-          <canvas
-          baseChart
-          [data]="kabupatenwChartData"
-          [labels]="kabupatenwChartLabels"
-          [chartType]="kabupatenwChartType"></canvas>
-          <p>Grafik Kabupaten yang Popular</p>
-        </div>
-      </div>
-
-      <div style="display: flex;">
-        <div style="width: 50%;">
-          <canvas
-          baseChart
-          [data]="awalChartData"
-          [labels]="awalChartLabels"
-          [chartType]="awalChartType"></canvas>
-          <p>Grafik Destinasi Awal Yang Popular</p>
-        </div>
-        <div style="width: 50%;">
-          <canvas
-          baseChart
-          [data]="tujuanChartData"
-          [labels]="tujuanChartLabels"
-          [chartType]="tujuanChartType"></canvas>
-          <p>Grafik Destinasi Tujuan Yang Popular</p>
-        </div>
-      </div>
+      <p>Grafik Perkembangan Jumlah Pengguna dan Total Rencana Perjalanan</p>
 
     </mat-expansion-panel>
 

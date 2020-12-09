@@ -1,30 +1,82 @@
+import { Kabupaten } from './../model/kabupaten.model';
+import { environment } from './../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Kabupaten } from '../model/kabupaten.model';
+import { Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KabupatenService {
 
-kabupaten:Kabupaten[]=[
-  {
-    kabupatenKODE:'34.04',
-    kabupatenALAMAT:'Jl Parasamya Beran Tridadi Sleman, Daerah Istimewa Yogyakarta 55511',
-    kabupatenFOTOICON:"https://jogjacar.com/wp-content/uploads/2018/07/Kabupaten-Sleman-google.com_.jpg",
-    kabupatenFOTOICONKET:"Candi Prambanan",
-    kabupatenKET:"Alamat Sekretariat Daerah Kabupaten",
-    kabupatenNAMA:"Kabupaten Sleman"
-  },
-  {
-    kabupatenKODE:'33.08',
-    kabupatenALAMAT:'Kantor Pemerintahan : Jl. Soekarno Hatta (Jl. Letnan Tukiyat) ',
-    kabupatenFOTOICON:"https://travelmaker.id/wp-content/uploads/2020/05/WhatsApp-Image-2020-05-11-at-19.16.49.jpeg",
-    kabupatenFOTOICONKET:"Candi Borobudur",
-    kabupatenKET:"Sejarah kabupaten Magelang tidak bisa dipisahkan dari",
-    kabupatenNAMA:"Kabupaten Magelang"
-  }
-]
+constructor(private httpClient:HttpClient, private snackbar:MatSnackBar) { }
 
-constructor() { }
+loadKabupaten = new Subject<Kabupaten[]>();
 
+getAllKabupaten(){
+  this.httpClient.get(`${environment.endpoint}/kabupaten`,{
+    headers:{
+      Authorization:environment.apiKey
+    }
+  }).subscribe((response:any)=>{
+    const success = response.success;
+    const data:Kabupaten[] = response.data;
+    if(success && data.length>0){
+      this.loadKabupaten.next(data);
+    }else{
+      this.snackbar.open('Failed To Fetch Data','Dismiss!',{duration:3000})
+    }
+  },err=>[
+    this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000})
+  ])
+}
+
+getAllKabupatenForOptions(){
+  return this.httpClient.get(`${environment.endpoint}/kabupaten`,{
+    headers:{
+      Authorization:environment.apiKey
+    }
+  })
+}
+
+getSingleKabupaten(kabupatenKODE:string){
+  return this.httpClient.get(`${environment.endpoint}/kabupaten/${kabupatenKODE}`,{
+    headers:{Authorization:environment.apiKey}
+  });
+}
+
+addKabupaten(kabupaten:Kabupaten){
+  return this.httpClient.post(`${environment.endpoint}/kabupaten`,{
+    kabupatenKODE:kabupaten.kabupatenKODE,
+    kabupatenNAMA:kabupaten.kabupatenNAMA,
+    kabupatenALAMAT:kabupaten.kabupatenALAMAT,
+    kabupatenKET:kabupaten.kabupatenKET,
+    kabupatenFOTOICON:kabupaten.kabupatenFOTOICON,
+    kabupatenFOTOICONKET:kabupaten.kabupatenFOTOICONKET
+  },{
+    headers:{
+      Authorization:environment.apiKey
+    }
+  });
+}
+
+updateKabupaten(kabupaten:Kabupaten,kabupatenKODE:string){
+  return this.httpClient.put(`${environment.endpoint}/kabupaten/${kabupatenKODE}`,{
+    kabupatenKODE:kabupaten.kabupatenKODE,
+    kabupatenNAMA:kabupaten.kabupatenNAMA,
+    kabupatenALAMAT:kabupaten.kabupatenALAMAT,
+    kabupatenKET:kabupaten.kabupatenKET,
+    kabupatenFOTOICON:kabupaten.kabupatenFOTOICON,
+    kabupatenFOTOICONKET:kabupaten.kabupatenFOTOICONKET
+  },{
+    headers:{Authorization:environment.apiKey}
+  });
+}
+
+deleteKabupaten(kabupatenKODE:string){
+  return this.httpClient.delete(`${environment.endpoint}/kabupaten/${kabupatenKODE}`,{
+    headers:{Authorization:environment.apiKey}
+  })
+}
 }

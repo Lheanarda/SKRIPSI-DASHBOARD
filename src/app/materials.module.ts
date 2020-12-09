@@ -28,7 +28,8 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatRippleModule} from '@angular/material/core';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 const Materials = [
   MatButtonModule,
   MatButtonToggleModule,
@@ -59,7 +60,8 @@ const Materials = [
   MatRippleModule,
   MatExpansionModule,
   MaterialFileInputModule,
-  NgxMatTimepickerModule
+  NgxMatTimepickerModule,
+  CKEditorModule
 ]
 
 @NgModule({

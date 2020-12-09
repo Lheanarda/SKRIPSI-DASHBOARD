@@ -1,3 +1,10 @@
+import { environment } from './../../../environments/environment';
+import { KecamatanService } from 'src/app/services/kecamatan.service';
+import { Subscription } from 'rxjs';
+import { KabupatenService } from './../../services/kabupaten.service';
+import { FormFotoWisataComponent } from './../form-foto-wisata/form-foto-wisata.component';
+import { FormFasilitasObyekComponent } from './../form-fasilitas-obyek/form-fasilitas-obyek.component';
+import { FormJarakComponent } from './../form-jarak/form-jarak.component';
 import { FormBeritaComponent } from './../form-berita/form-berita.component';
 import { FormWisataComponent } from './../form-wisata/form-wisata.component';
 import { FormKecamatanComponent } from './../form-kecamatan/form-kecamatan.component';
@@ -12,11 +19,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { config } from 'process';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormKategoriWisataComponent } from '../form-kategori-wisata/form-kategori-wisata.component';
+import { Kabupaten } from 'src/app/model/kabupaten.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Kecamatan } from 'src/app/model/kecamatan.model';
 
 @Component({
   selector: 'app-list-table',
@@ -38,6 +45,7 @@ export class ListTableComponent implements OnInit, OnDestroy {
 
   //basic var
   dataSource;
+  imgUrl:string =`${environment.endpoint}/images`
 
   //loading
   deleteLoading:Boolean = false;
@@ -45,15 +53,27 @@ export class ListTableComponent implements OnInit, OnDestroy {
   //Selecttion
   selection = new SelectionModel(true,[]);
 
+  //subs
+  kabupatenSubs:Subscription;
+  kecamatanSubs:Subscription;
   constructor(
     public dialog:MatDialog ,
-    private router:Router) { }
+    private kabService:KabupatenService,
+    private kecService:KecamatanService,
+    private snackbar:MatSnackBar) { }
 
   ngOnInit() {
     //init data on load
     this.initiateDataSource(this.listSource);
 
+    //kabupaten subs
+    this.kabupatenSubs =  this.kabService.loadKabupaten.subscribe((data:Kabupaten[])=>{
+      this.initiateDataSource(data);
+    })
 
+    this.kecamatanSubs = this.kecService.loadKecamatan.subscribe((data:Kecamatan[])=>{
+      this.initiateDataSource(data);
+    })
   }
 
   //init data function
@@ -77,55 +97,76 @@ export class ListTableComponent implements OnInit, OnDestroy {
   }
 
   //DIALOG
-
-
-  onManipulate(mode:'new'|'edit', id?:number){
+  onManipulate(mode:'new'|'edit', el?:any){
     let dialogRef;
+    if(!el){
+      el = {};
+    }
     switch (this.title.toLowerCase()){
       case 'kabupaten':
-        dialogRef = this.dialog.open(FormKabupatenComponent,{data:{title:this.title,mode:mode, id:id}});
-        dialogRef.afterClosed().subscribe(result=>{
-
-        });
+        dialogRef = this.dialog.open(FormKabupatenComponent,{data:{title:this.title,mode:mode, id:el.kabupatenKODE},disableClose:true});
         break;
       case 'kegiatan':
-        dialogRef = this.dialog.open(FormKegiatanComponent,{data:{title:this.title,mode:mode,id:id}});
-        dialogRef.afterClosed().subscribe(result=>{
-
-        })
+        dialogRef = this.dialog.open(FormKegiatanComponent,{data:{title:this.title,mode:mode,id:el.eventKODE},disableClose:true});
         break;
       case 'kategori berita':
-        dialogRef = this.dialog.open(FormKategoriBeritaComponent,{data:{title:this.title,mode:mode,id:id}});
-        dialogRef.afterClosed().subscribe(result=>{});
+        dialogRef = this.dialog.open(FormKategoriBeritaComponent,{data:{title:this.title,mode:mode,id:el.kategoriberitaKODE},disableClose:true});
         break;
       case 'kategori wisata':
-        dialogRef = this.dialog.open(FormKategoriWisataComponent,{data:{title:this.title,mode:mode,id:id}});
-        dialogRef.afterClosed().subscribe(result=>{});
+        dialogRef = this.dialog.open(FormKategoriWisataComponent,{data:{title:this.title,mode:mode,id:el.kategoriKODE},disableClose:true});
         break;
       case 'fasilitas':
-        dialogRef = this.dialog.open(FormFasilitasComponent,{data:{title:this.title,mode:mode,id:id}});
-        dialogRef.afterClosed().subscribe(result=>{});
+        dialogRef = this.dialog.open(FormFasilitasComponent,{data:{title:this.title,mode:mode,id:el.fasilitasKODE},disableClose:true});
         break;
       case 'kecamatan':
-        dialogRef = this.dialog.open(FormKecamatanComponent,{data:{title:this.title,mode:mode,id:id}});
-        dialogRef.afterClosed().subscribe(result=>{});
+        dialogRef = this.dialog.open(FormKecamatanComponent,{data:{title:this.title,mode:mode,id:el.kecamatanKODE},disableClose:true});
         break;
       case 'obyek wisata':
-        dialogRef = this.dialog.open(FormWisataComponent,{data:{title:this.title,mode:mode,id:id}});
-        dialogRef.afterClosed().subscribe(result=>{});
+        dialogRef = this.dialog.open(FormWisataComponent,{data:{title:this.title,mode:mode,id:el.obyekKODE},disableClose:true});
         break;
       case 'berita':
-        dialogRef = this.dialog.open(FormBeritaComponent,{data:{title:this.title,mode:mode,id:id}});
-        dialogRef.afterClosed().subscribe(result=>{});
+        dialogRef = this.dialog.open(FormBeritaComponent,{data:{title:this.title,mode:mode,id:el.beritaKODE},disableClose:true});
+        break;
+      case 'jarak antar wisata':
+        dialogRef = this.dialog.open(FormJarakComponent,{data:{title:this.title,mode:mode,el:el},disableClose:true});
+        break;
+      case 'fasilitas obyek wisata':
+        dialogRef = this.dialog.open(FormFasilitasObyekComponent,{data:{title:this.title,mode:mode,el:el},disableClose:true});
+        break;
+      case 'foto obyek wisata':
+        dialogRef = this.dialog.open(FormFotoWisataComponent,{data:{title:this.title,mode:mode,id:el.fotoobyekKODE},disableClose:true});
         break;
     }
-
-
   }
-  openDialogDelete(mode:'one'|'bulk', id:any){
-    console.log(id)
-    //delete function
-    let dialogRef = this.dialog.open(DialogDeleteComponent,{data:{title:this.title, id:id, mode}});
+  openDialogDelete(mode:'one'|'bulk', el:any){
+
+    let dialogRef = this.dialog.open(DialogDeleteComponent,{data:{title:this.title, mode:mode}});
+    dialogRef.afterClosed().subscribe(result=>{
+      if(result==='true'){
+        switch (this.title.toLowerCase()){
+          case 'kabupaten':
+            this.deleteLoading = true;
+            this.kabService.deleteKabupaten(el.kabupatenKODE).subscribe((response:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(response.messages[0],'Dismiss!',{duration:3000})
+              this.kabService.getAllKabupaten();
+            });
+            break;
+          case 'kategori berita':
+            console.log(el.kategoriberitaKODE);
+            break;
+          case 'kecamatan':
+            this.deleteLoading = true;
+            this.kecService.deleteKecamatan(el.kecamatanKODE).subscribe((response:any)=>{
+              console.log(response);
+              this.deleteLoading = false;
+              this.snackbar.open(response.messages[0],'Dismiss!',{duration:3000});
+              this.kecService.getAllKecamatan();
+            });
+            break;
+        }
+      }
+    })
   }
 
   //SELECTION
@@ -163,32 +204,21 @@ export class ListTableComponent implements OnInit, OnDestroy {
   }
 
 
-  readDeleteId(){
-    if(this.title.toLowerCase()==='kabupaten'){
-      return 'kabupatenKODE'
-    }else if (this.title.toLowerCase()==='kegiatan'){
-      return 'eventKODE'
-    }else if (this.title.toLowerCase()==='kategori berita'){
-      return 'kategoriberitaKODE'
-    }else if (this.title.toLowerCase()==='kategori wisata'){
-      return 'kategoriKODE'
-    }else if (this.title.toLowerCase()==='fasilitas'){
-      return 'fasilitasKODE'
-    }else if (this.title.toLowerCase()==='kecamatan'){
-      return 'kecamatanKODE'
-    }else if (this.title.toLowerCase()==='obyek wisata'){
-      return 'obyekKODE'
-    }else if (this.title.toLowerCase()==='berita'){
-      return 'beritaKODE'
-    }
-  }
-
   helperConditionListTable(displayedColumn:string, value:string){
     if(displayedColumn===value) return true;
     else return false;
   }
 
   ngOnDestroy(){
+    if(this.kabupatenSubs){
+      console.log('list table kabupaten destroyed');
+      this.kabupatenSubs.unsubscribe();
+    }
+
+    if(this.kecamatanSubs){
+      console.log("List Tabel kecamatan destroyed");
+      this.kecamatanSubs.unsubscribe();
+    }
   }
 
 }

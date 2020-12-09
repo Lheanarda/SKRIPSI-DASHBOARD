@@ -1,6 +1,7 @@
 import { ObyekwisataService } from './../../services/obyekwisata.service';
 import { ObyekWisata } from './../../model/obyek-wisata.model';
 import { Component, OnInit } from '@angular/core';
+import { FotoWisata } from 'src/app/model/fotowisata.model';
 
 @Component({
   selector: 'app-wisata',
@@ -67,11 +68,38 @@ export class WisataComponent implements OnInit {
     'Kode Kategori',
     'Update',
     'Delete'
+  ];
+
+  //foto wisata
+  fotoobyeks:FotoWisata[];
+  displayedColumnsFoto:string[]=[
+    'select',
+    'fotoobyekGAMBAR',
+    'fotoobyekKODE',
+    'fotoobyekNAMA',
+    'fotoobyekKET',
+    'fotoobyekTGLAMBIL',
+    'obyekKODE',
+    'update',
+    'delete'
+  ];
+  headerColumnsFoto:string[]=[
+    'Gambar Wisata',
+    'Kode Foto',
+    'Nama Foto',
+    'Keterangan Foto',
+    'Tanggal Ambil Foto',
+    'Nama Wisata',
+    'Update',
+    'Delete'
   ]
+
+
   constructor(private wisataService:ObyekwisataService) { }
 
   ngOnInit() {
-    this.obyeks = this.wisataService.obyeks
+    this.obyeks = this.wisataService.obyeks;
+    this.fotoobyeks = this.wisataService.fotoWisatas;
   }
 
 }

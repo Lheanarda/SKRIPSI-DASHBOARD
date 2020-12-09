@@ -1,3 +1,4 @@
+import { FotoWisata } from './../model/fotowisata.model';
 import { ObyekWisata } from './../model/obyek-wisata.model';
 import { Injectable } from '@angular/core';
 
@@ -56,7 +57,25 @@ obyeks:ObyekWisata[]=[
     obyekWAKTUKUNJUNG:120
 
   },
+];
 
+fotoWisatas:FotoWisata[]=[
+  {
+    fotoobyekKODE:1,
+    fotoobyekNAMA:'Candi Borobudur',
+    fotoobyekKET:'Pintu Masuk Candi Borobudur',
+    fotoobyekTGLAMBIL:new Date(),
+    obyekKODE:'candi prambanan',
+    fotoobyekGAMBAR:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Borobudur_Stupa_Merapi.jpg'
+  },
+  {
+    fotoobyekKODE:1,
+    fotoobyekNAMA:'Candi Borobudur',
+    fotoobyekKET:'Pintu Masuk Candi Borobudur',
+    fotoobyekTGLAMBIL:new Date(),
+    obyekKODE:'candi prambanan',
+    fotoobyekGAMBAR:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Borobudur_Stupa_Merapi.jpg'
+  }
 ]
 constructor() { }
 

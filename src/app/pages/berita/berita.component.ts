@@ -1,7 +1,7 @@
+import { BeritaFoto } from './../../model/beritafoto.model';
 import { BeritaService } from './../../services/berita.service';
 import { Component, OnInit } from '@angular/core';
 import { Berita } from 'src/app/model/berita.model';
-
 @Component({
   selector: 'app-berita',
   templateUrl: './berita.component.html',
@@ -41,11 +41,31 @@ export class BeritaComponent implements OnInit {
     'Kode Event',
     'Update',
     'Delete'
+  ];
+
+
+  //data source
+  beritaFotos:BeritaFoto[];
+  //columns data
+  displayedColumnsFoto:string[]=[
+    'beritafotoGAMBAR',
+    'JUDUL',
+    'beritafotoKODE',
+    'beritafotoNAMA'
+  ];
+
+  //header colmns
+  headerColumnsFoto:string[]=[
+    'Gambar Berita',
+    'Judul Berita',
+    'Kode foto Berita',
+    'Nama Foto Berita'
   ]
   constructor(private beritaService:BeritaService) { }
 
   ngOnInit() {
     this.beritas = this.beritaService.beritas;
+    this.beritaFotos = this.beritaService.beritafotos;
   }
 
 }

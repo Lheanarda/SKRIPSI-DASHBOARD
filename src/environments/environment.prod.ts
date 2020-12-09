@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  endpoint:'http://localhost/v1',
+  apiKey:'Bearer PesonaJawa2020'
 };

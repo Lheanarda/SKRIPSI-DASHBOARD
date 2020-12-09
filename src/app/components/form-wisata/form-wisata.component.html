@@ -1,12 +1,13 @@
-<form>
+<form class="form-modal">
   <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Wisata</mat-card-title>
 
   <mat-dialog-content>
-    <div class="row mb-5">
+    <h2>Informasi Umum Wisata</h2>
+    <div class="row mb-3">
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Kode Wisata</mat-label>
-          <input matInput type="text">
+          <input matInput type="text" required>
           <mat-hint>Input kode wisata</mat-hint>
           <mat-error>kode wisata is required</mat-error>
         </mat-form-field>
@@ -14,7 +15,7 @@
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Nama Wisata</mat-label>
-          <input matInput type="text">
+          <input matInput type="text" required>
           <mat-hint>Input nama wisata</mat-hint>
           <mat-error>nama wisata is required</mat-error>
         </mat-form-field>
@@ -23,17 +24,90 @@
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Waktu Kunjung</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" required>
           <mat-hint>Input waktu kunjung dalam menit</mat-hint>
           <mat-error>waktu kunjung is required</mat-error>
         </mat-form-field>
       </div>
     </div>
 
-    <div class="row mb-3 mt-2">
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <mat-form-field class="full-width" >
+          <mat-label>Popularitas</mat-label>
+          <mat-select required>
+            <mat-option value="W01">Sangat Populer</mat-option>
+            <mat-option value="W02">Populer</mat-option>
+          </mat-select>
+          <mat-hint>Pilih popularitas wisata</mat-hint>
+          <mat-error>popularitas is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field class="full-width" >
+          <mat-label>Kemudahan Akses</mat-label>
+          <mat-select required>
+            <mat-option value="W01">Sangat Mudah</mat-option>
+            <mat-option value="W02">Mudah</mat-option>
+          </mat-select>
+          <mat-hint>Pilih kemudahan akses wisata</mat-hint>
+          <mat-error>kemudahan akses is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-4">
+        <mat-form-field  class="full-width">
+          <mat-label>Upload Icon wisata</mat-label>
+          <ngx-mat-file-input required  placeholder="Upload Foto Obyek Wisata" ></ngx-mat-file-input>
+          <mat-icon matSuffix>cloud_upload</mat-icon>
+          <mat-hint>Pilih icon wisata</mat-hint>
+          <mat-error>icon is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Alamat Wisata</mat-label>
+          <textarea matInput required></textarea>
+          <mat-hint>Input alamat wisata</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Keterangan Wisata</mat-label>
+          <textarea matInput></textarea>
+          <mat-hint>Input keterangan wisata</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field class="full-width" >
+          <mat-label>Kategori Wisata</mat-label>
+          <mat-select required>
+            <mat-option value="W01">KODE NAMA</mat-option>
+            <mat-option value="W02">KODE NAMA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="full-width" >
+          <mat-label>Kecamatan</mat-label>
+          <mat-select required>
+            <mat-option value="W01">KODE NAMA</mat-option>
+            <mat-option value="W02">KODE NAMA</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-3 ">
       <div class="col-md-3">
         <p style="color:#7a7a7a">Jam Buka</p>
-        <ngx-mat-timepicker [ngModel]="test" name="test"></ngx-mat-timepicker>
+        <ngx-mat-timepicker  [ngModel]="test" name="test"></ngx-mat-timepicker>
       </div>
       <div class="col-md-3">
         <p style="color:#7a7a7a">Jam Tutup</p>
@@ -53,28 +127,16 @@
       </div>
     </div>
 
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <mat-form-field class="full-width">
-          <mat-label>Alamat Wisata</mat-label>
-          <textarea matInput></textarea>
-          <mat-hint>Input alamat wisata</mat-hint>
-        </mat-form-field>
-      </div>
-      <div class="col-md-6">
-        <mat-form-field class="full-width">
-          <mat-label>Keterangan Wisata</mat-label>
-          <textarea matInput></textarea>
-          <mat-hint>Input keterangan wisata</mat-hint>
-        </mat-form-field>
-      </div>
-    </div>
 
+
+
+    <h2>Koordinat Wisata</h2>
     <div class="row mb-3">
+
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Longitude</mat-label>
-          <input matInput type="number">
+          <input required matInput type="number">
           <mat-hint>Input longitude wisata</mat-hint>
           <mat-error>longitude is required</mat-error>
         </mat-form-field>
@@ -109,7 +171,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Latitude</mat-label>
-          <input matInput type="number">
+          <input required matInput type="number">
           <mat-hint>Input latiude wisata</mat-hint>
           <mat-error>latiude is required</mat-error>
         </mat-form-field>
@@ -140,57 +202,7 @@
       </div>
     </div>
 
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Popularitas</mat-label>
-          <mat-select>
-            <mat-option value="W01">Sangat Populer</mat-option>
-            <mat-option value="W02">Populer</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
 
-      <div class="col-md-4">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Kemudahan Akses</mat-label>
-          <mat-select>
-            <mat-option value="W01">Sangat Mudah</mat-option>
-            <mat-option value="W02">Mudah</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-4">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Upload foto wisata</mat-label>
-          <ngx-mat-file-input  placeholder="Upload Foto Obyek Wisata" ></ngx-mat-file-input>
-          <mat-icon matSuffix>cloud_upload</mat-icon>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Kategori Wisata</mat-label>
-          <mat-select>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="col-md-6">
-        <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Kecamatan</mat-label>
-          <mat-select>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
   </mat-dialog-content>
 
   <div class="row">

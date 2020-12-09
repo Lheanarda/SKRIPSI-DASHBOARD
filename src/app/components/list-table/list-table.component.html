@@ -1,5 +1,10 @@
 
-<div class="mb-4" [@flyIn]>
+<div class="mb-4" [@flyIn]
+[ngClass]="{'smaller':
+title==='Foto Berita' ||
+title==='Fasilitas Obyek Wisata' ||
+title==='Fasilitas' ||
+title==='Kategori Berita'}">
   <mat-card>
     <mat-card-content >
       <h1>{{title | titlecase }} List</h1>
@@ -30,7 +35,8 @@
           mat-raised-button
           (click)="onManipulate('new')"
           class="float-right mt-2 btn-new"
-          color="primary"> New {{title}}</button>
+          color="primary"
+          *ngIf="title!== 'Foto Berita'"> New {{title}}</button>
         </div>
       </div>
     </mat-card-content>
@@ -68,24 +74,43 @@
                     !helperConditionListTable(displayedColumn,'kabupatenFOTOICON') &&
                     !helperConditionListTable(displayedColumn,'obyekFOTO') &&
                     !helperConditionListTable(displayedColumn,'beritaGAMBAR') &&
-                    !helperConditionListTable(displayedColumn,'eventPOSTER')"
-
+                    !helperConditionListTable(displayedColumn,'eventPOSTER') &&
+                    !helperConditionListTable(displayedColumn,'fotoobyekGAMBAR') &&
+                    !helperConditionListTable(displayedColumn,'beritafotoGAMBAR') &&
+                    !helperConditionListTable(displayedColumn, 'eventMULAI') &&
+                    !helperConditionListTable(displayedColumn,'eventSELESAI')&&
+                    !helperConditionListTable(displayedColumn,'beritaTGL') &&
+                    !helperConditionListTable(displayedColumn,'create_date')&&
+                    !helperConditionListTable(displayedColumn,'update_date')"
                     class="display-values">
-                      {{element[displayedColumn]}}
+                      {{ element[displayedColumn]  &&  (element[displayedColumn].length>50) ?
+                        (element[displayedColumn] | slice:0:60)+'...':
+                        element[displayedColumn]}}
+
                     </div>
+                    <div *ngIf="helperConditionListTable(displayedColumn, 'eventMULAI') ||
+                    helperConditionListTable(displayedColumn,'eventSELESAI')||
+                    helperConditionListTable(displayedColumn,'beritaTGL') ||
+                    helperConditionListTable(displayedColumn,'create_date') ||
+                    helperConditionListTable(displayedColumn,'update_date')">
+                    {{element[displayedColumn] | date}}
+                    </div>
+
                     <img *ngIf="
                     helperConditionListTable(displayedColumn,'kabupatenFOTOICON') ||
                     helperConditionListTable(displayedColumn,'obyekFOTO') ||
                     helperConditionListTable(displayedColumn,'beritaGAMBAR') ||
-                    helperConditionListTable(displayedColumn,'eventPOSTER') "
-                          src={{element[displayedColumn]}} alt="Foto" class="column_picture"/>
+                    helperConditionListTable(displayedColumn,'eventPOSTER') ||
+                    helperConditionListTable(displayedColumn,'fotoobyekGAMBAR') ||
+                    helperConditionListTable(displayedColumn,'beritafotoGAMBAR')"
+                          [src]="imgUrl+'/'+element[displayedColumn]" alt="Foto" class="column_picture"/>
                   </mat-cell>
               </ng-container>
           </div>
           <ng-container matColumnDef="update" stickyEnd>
             <mat-header-cell *matHeaderCellDef > Update </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <a (click)="onManipulate('edit',element.id)" class="icon-click-update">
+              <a (click)="onManipulate('edit',element)" class="icon-click-update">
                 <mat-icon >edit</mat-icon>
               </a>
             </mat-cell>
@@ -94,7 +119,7 @@
           <ng-container matColumnDef="delete" stickyEnd>
             <mat-header-cell *matHeaderCellDef > Delete </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <a (click)="openDialogDelete('one', element[readDeleteId()])" class="icon-click-delete" style="color: var(--color-red); cursor: pointer;">
+              <a (click)="openDialogDelete('one', element)" class="icon-click-delete" style="color: var(--color-red); cursor: pointer;">
                 <mat-icon >delete</mat-icon>
               </a>
             </mat-cell>
@@ -104,7 +129,7 @@
 
         </mat-table>
 
-        <mat-paginator [pageSizeOptions]="[10,20,40]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
       </div>
 
     </mat-card-content>

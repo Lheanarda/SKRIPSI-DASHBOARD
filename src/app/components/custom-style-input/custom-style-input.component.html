@@ -1,0 +1,28 @@
+<div class="form-group">
+  <input
+  [ngStyle]="{borderBottom:getValidatorBorderColor()}"
+  type={{type}}
+  class="form-input"
+  placeholder={{placeholder}}
+  id={{placeholder}}
+  autocomplete="off"
+  required>
+  <button
+  type="button"
+  mat-icon-button
+  class="form-input--clear"
+  [ngStyle]="{right:placeholder=='Password'?'var(--text-password-position)':'var(--text-normal-position)'}"
+  *ngIf="inputControl.value"
+  (click)="inputControl.setValue('')">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <button
+  mat-icon-button
+  class="form-input--visibility"
+  (click)="onChangeVisibility()"
+  *ngIf="placeholder=='Password'"
+  type="button">
+    <mat-icon>{{visibility}}</mat-icon>
+  </button>
+  <label for="username" class="form-label">{{placeholder}}</label>
+</div>

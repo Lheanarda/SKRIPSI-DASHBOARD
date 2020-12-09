@@ -1,5 +1,7 @@
 <app-navigation>
+  <mat-progress-bar mode="query" *ngIf="load"></mat-progress-bar>
   <app-list-table
+  *ngIf="kecamatan"
   [title]="'Kecamatan'"
   [listSource]="kecamatan"
   [headerColumns]="headerColumns"

@@ -1,3 +1,23 @@
-<p>
-  login works!
-</p>
+<div class="auth-background">
+  <div class="auth__container">
+    <div class="auth__form">
+      <h2 class="auth__form-title">pesona jawa login</h2>
+      <form class="auth__form--form">
+        <app-custom-style-input
+        [placeholder]="'Email'"
+        [type]="'email'"></app-custom-style-input>
+        <app-custom-style-input
+        [placeholder]="'Password'"
+        [type]="'password'"></app-custom-style-input>
+        <!-- <p class="auth__form--err">{{errMsg | lowercase}}&nbsp; </p> -->
+        <button
+        class="auth__btn--submit"
+        type="submit">
+          <span class="auth__btn--text">Login</span>
+          <mat-icon class="auth__btn--arrow" >arrow_forward</mat-icon>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+

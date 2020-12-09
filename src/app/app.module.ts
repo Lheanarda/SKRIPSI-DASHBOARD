@@ -1,3 +1,7 @@
+import { CustomStyleInputComponent } from './components/custom-style-input/custom-style-input.component';
+import { FormFotoWisataComponent } from './components/form-foto-wisata/form-foto-wisata.component';
+import { FormFasilitasObyekComponent } from './components/form-fasilitas-obyek/form-fasilitas-obyek.component';
+import { FormJarakComponent } from './components/form-jarak/form-jarak.component';
 import { FormBeritaComponent } from './components/form-berita/form-berita.component';
 import { JarakComponent } from './pages/jarak/jarak.component';
 import { FormWisataComponent } from './components/form-wisata/form-wisata.component';
@@ -24,7 +28,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './materials.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -37,7 +40,11 @@ import { MatListModule } from '@angular/material/list';
 import { ChartsModule } from 'ng2-charts';
 import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireModule } from 'angularfire2';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,8 +69,12 @@ import { FormsModule } from '@angular/forms';
     FormFasilitasComponent,
     FormKecamatanComponent,
     FormWisataComponent,
+    FormJarakComponent,
+    FormFasilitasObyekComponent,
     JarakComponent,
-    FormBeritaComponent
+    FormBeritaComponent,
+    FormFotoWisataComponent,
+    CustomStyleInputComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +90,16 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     ChartsModule,
     NgxMatNativeDateModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyD_vSEwAdi4mmJrhqXXPF_KCRSlpdBq164",
+      authDomain: "pesona-jawa.firebaseapp.com",
+      projectId: "pesona-jawa",
+      storageBucket: "pesona-jawa.appspot.com",
+    })
   ],
   entryComponents:[
     FormFasilitasComponent,
@@ -90,7 +110,9 @@ import { FormsModule } from '@angular/forms';
     DialogDeleteComponent,
     FormKecamatanComponent,
     FormWisataComponent,
-    FormBeritaComponent
+    FormBeritaComponent,
+    FormJarakComponent,
+    FormFasilitasObyekComponent
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,6 @@
 import { Berita } from './../model/berita.model';
 import { Injectable } from '@angular/core';
+import { BeritaFoto } from '../model/beritafoto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,23 @@ beritas:Berita[]=[
     eventKODE:null
   }
 ];
+
+beritafotos:BeritaFoto[]=[
+  {
+    beritaKODE:'2017.10.001',
+    beritafotoKODE:1,
+    JUDUL:'Mengapa Orang Jawa Tengah Andal Mengolah Masakan Kambing?',
+    beritafotoGAMBAR:'https://craftlog.com/m/i/5213695=s1280=h960',
+    beritafotoNAMA:'Hello World',
+  },
+  {
+    beritaKODE:'2017.10.001',
+    beritafotoKODE:2,
+    JUDUL:'Mengapa Orang Jawa Tengah Andal Mengolah Masakan Kambing?',
+    beritafotoGAMBAR:'https://craftlog.com/m/i/5213695=s1280=h960',
+    beritafotoNAMA:'Hello World 2',
+  }
+]
 constructor() { }
 
 }

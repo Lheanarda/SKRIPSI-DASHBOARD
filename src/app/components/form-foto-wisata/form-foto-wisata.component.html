@@ -1,0 +1,66 @@
+<form class="form-modal">
+  <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Foto Wisata</mat-card-title>
+
+  <mat-dialog-content>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field class="full-width" >
+          <mat-label>Nama foto</mat-label>
+          <input matInput type="text" required>
+          <mat-hint>Input nama foto</mat-hint>
+          <mat-error>nama foto is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="legacy" class="full-width">
+          <ngx-mat-file-input  placeholder="Upload Foto Wisata" required></ngx-mat-file-input>
+          <mat-icon matSuffix>cloud_upload</mat-icon>
+          <mat-hint>Pilih foto wisata</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Tanggal Ambil Foto</mat-label>
+          <input matInput [matDatepicker]="mdate" required/>
+          <mat-datepicker-toggle [for]="mdate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #mdate startView="year"></mat-datepicker>
+          <mat-hint>Input tanggal ambil foto</mat-hint>
+          <mat-error>Tanggal ambil foto is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="full-width">
+          <mat-label>Obyek Wisata</mat-label>
+          <mat-select required>
+            <mat-option value="test-1">KODE NAMA</mat-option>
+            <mat-option value="test-2">KODE NAMA</mat-option>
+          </mat-select>
+          <mat-hint>Pilih obyek wisata</mat-hint>
+          <mat-error>obyek wisata is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <mat-form-field class="full-width">
+          <mat-label>Keterangan Foto</mat-label>
+          <input matInput />
+          <mat-hint>Input keterangan foto</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <div class="row">
+    <div class="buttons full-width">
+      <button mat-button mat-raised-button mat-dialog-close>Close</button>
+      <button mat-button mat-raised-button type="reset" >Reset</button>
+      <button mat-button mat-raised-button>Submit</button>
+    </div>
+  </div>
+</form>

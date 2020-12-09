@@ -1,5 +1,8 @@
+
 <app-navigation>
+  <mat-progress-bar mode="query" *ngIf="load"></mat-progress-bar>
   <app-list-table
+  *ngIf="kabupatens"
   [displayedColumns]="displayedColumns"
   [headerColumns]="headerColumns"
   [listSource]="kabupatens"
