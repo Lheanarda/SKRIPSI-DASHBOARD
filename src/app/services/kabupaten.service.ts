@@ -1,3 +1,4 @@
+import { ImageService } from './image.service';
 import { Kabupaten } from './../model/kabupaten.model';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -27,9 +28,9 @@ getAllKabupaten(){
     }else{
       this.snackbar.open('Failed To Fetch Data','Dismiss!',{duration:3000})
     }
-  },err=>[
+  },err=>{
     this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000})
-  ])
+  })
 }
 
 getAllKabupatenForOptions(){

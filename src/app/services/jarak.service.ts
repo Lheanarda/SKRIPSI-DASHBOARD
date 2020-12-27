@@ -1,3 +1,7 @@
+import { environment } from './../../environments/environment';
+import { Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Jarak } from '../model/jarak.model';
 
@@ -6,23 +10,69 @@ import { Jarak } from '../model/jarak.model';
 })
 export class JarakService {
 
-jaraks:Jarak[]=[
-  {
-    obyekKODEasal:'Candi Prambanan',
-    obyekKODEtujuan:'Candi Borobudur',
-    obyekRUTE:'Melalui jalan desa yang tidak lebar dan jalanan menanjak dan turunan, perlu kehati-hatian pengendara',
-    obyekjarak:15,
-    obyektempuh:120
-  },
-  {
-    obyekKODEasal:'Candi Cetho',
-    obyekKODEtujuan:'Museum Karst',
-    obyekRUTE:'-',
-    obyekjarak:15,
-    obyektempuh:120
-  }
-]
 
-constructor() { }
+  constructor(private http:HttpClient,private snackbar:MatSnackBar) { }
+
+  loadJarak = new Subject<Jarak[]>();
+
+  getAllJarakObyek(){
+    this.http.get(`${environment.endpoint}/jarakobyek`,{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    }).subscribe((res:any)=>{
+      if(res.success && res.data){
+        this.loadJarak.next(res.data)
+      }else{
+        this.snackbar.open(`Failed to fetch data`,'Dismiss!',{duration:3000});
+      }
+    },err=>{
+      this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
+    })
+  }
+
+  getSingleJarakObyek(obyekKODEasal:string,obyekKODEtujuan:string){
+    return this.http.get(`${environment.endpoint}/jarakobyek/${obyekKODEasal}/${obyekKODEtujuan}`,{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    });
+  }
+
+  addJarakObyek(jarak:Jarak){
+    return this.http.post(`${environment.endpoint}/jarakobyek`,{
+      obyekKODEasal:jarak.obyekKODEasal,
+      obyekKODEtujuan:jarak.obyekKODEtujuan,
+      obyekjarak:jarak.obyekjarak,
+      obyektempuh:jarak.obyektempuh,
+      obyekRUTE:jarak.obyekRUTE
+    },{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    })
+  }
+
+  updateJarakObyek(jarak:Jarak,obyekKODEasal:string,obyekKODEtujuan:string){
+    return this.http.put(`${environment.endpoint}/jarakobyek/${obyekKODEasal}/${obyekKODEtujuan}`,{
+      obyekKODEasal:jarak.obyekKODEasal,
+      obyekKODEtujuan:jarak.obyekKODEtujuan,
+      obyekjarak:jarak.obyekjarak,
+      obyektempuh:jarak.obyektempuh,
+      obyekRUTE:jarak.obyekRUTE
+    },{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    })
+  }
+
+  deleteJarakObyek(obyekKODEasal:string,obyekKODEtujuan:string){
+    return this.http.delete(`${environment.endpoint}/jarakobyek/${obyekKODEasal}/${obyekKODEtujuan}`,{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    })
+  }
 
 }

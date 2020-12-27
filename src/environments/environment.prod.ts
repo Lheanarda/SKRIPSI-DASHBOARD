@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  endpoint:'http://localhost/v1',
+  endpoint:'https://jawatravels.com/v1',
   apiKey:'Bearer PesonaJawa2020'
 };

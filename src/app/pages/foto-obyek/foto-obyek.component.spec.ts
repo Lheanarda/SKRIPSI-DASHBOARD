@@ -1,21 +1,23 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
-import { FormKabupatenComponent } from './form-kabupaten.component';
+import { FotoObyekComponent } from './foto-obyek.component';
 
-describe('FormKabupatenComponent', () => {
-  let component: FormKabupatenComponent;
-  let fixture: ComponentFixture<FormKabupatenComponent>;
+describe('FotoObyekComponent', () => {
+  let component: FotoObyekComponent;
+  let fixture: ComponentFixture<FotoObyekComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormKabupatenComponent ]
+      declarations: [ FotoObyekComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormKabupatenComponent);
+    fixture = TestBed.createComponent(FotoObyekComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -10,21 +10,6 @@ import { Subject } from 'rxjs';
 })
 export class KategoriwisataService {
 
-kategoris:KategoriWisata[]=[
-  {
-    kategoriKODE:'KW01',
-    kategoriNAMA:'Cultural Heritage (Warisan Budaya)',
-    kategoriKET:'Peninggalan atau warisan (heritage) merupakan konsep yang luas mencakup warisan yang bersifat alamiah, asli dan merupakan sejarah atau budaya kita.',
-    kategoriREFERENCE:'ICOMOS, 2002'
-  },
-  {
-    kategoriKODE:'KW02',
-    kategoriKET:'Jenis wisata budaya yang sedang populer, karena  banyak orang yang semakin mengembangkan spiritualitas mereka sendiri dan untuk menemukan hal yang lainnya. ',
-    kategoriNAMA:'Spiritual Tourism (Wisata Rohani)',
-    kategoriREFERENCE:'https://www.igi-global.com/dictionary/spiritual-tourism/39292'
-    }
-  ]
-
   constructor(private httpClient:HttpClient, private snackbar:MatSnackBar) { }
   loadKategoriWisata = new Subject<KategoriWisata[]>();
 
@@ -41,6 +26,12 @@ kategoris:KategoriWisata[]=[
       }
     },err=>{
       this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
+    })
+  }
+
+  getAllKategoriWisataForOptions(){
+    return this.httpClient.get(`${environment.endpoint}/kategoriwisata`,{
+      headers:{Authorization:environment.apiKey}
     })
   }
 
@@ -68,6 +59,12 @@ kategoris:KategoriWisata[]=[
       kategoriKET:kategoriwisata.kategoriKET,
       kategoriREFERENCE:kategoriwisata.kategoriREFERENCE
     },{
+      headers:{Authorization:environment.apiKey}
+    });
+  }
+
+  deleteKategoriWisata(kategoriKODE:string){
+    return this.httpClient.delete(`${environment.endpoint}/kategoriwisata/${kategoriKODE}`,{
       headers:{Authorization:environment.apiKey}
     });
   }

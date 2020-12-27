@@ -23,16 +23,14 @@
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
     "@ckeditor/ckeditor5-angular": "^2.0.1",
-    "@ckeditor/ckeditor5-build-classic": "^23.1.0",
+    "@omretterry/ckeditor5-build-decoupled-document-imageresize": "^12.4.0",
     "bootstrap": "^4.5.2",
     "chart.js": "^2.9.3",
     "ng2-charts": "^2.3.2",
     "ngx-material-file-input": "^2.1.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2",
-    "firebase": "^7.18.0",
-    "angularfire2": "^5.4.2"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.8",

@@ -2,9 +2,7 @@
 <div class="mb-4" [@flyIn]
 [ngClass]="{'smaller':
 title==='Foto Berita' ||
-title==='Fasilitas Obyek Wisata' ||
-title==='Fasilitas' ||
-title==='Kategori Berita'}">
+title==='Fasilitas Obyek Wisata' }">
   <mat-card>
     <mat-card-content >
       <h1>{{title | titlecase }} List</h1>
@@ -81,7 +79,8 @@ title==='Kategori Berita'}">
                     !helperConditionListTable(displayedColumn,'eventSELESAI')&&
                     !helperConditionListTable(displayedColumn,'beritaTGL') &&
                     !helperConditionListTable(displayedColumn,'create_date')&&
-                    !helperConditionListTable(displayedColumn,'update_date')"
+                    !helperConditionListTable(displayedColumn,'update_date') &&
+                    !helperConditionListTable(displayedColumn,'fotoobyekTGLAMBIL')"
                     class="display-values">
                       {{ element[displayedColumn]  &&  (element[displayedColumn].length>50) ?
                         (element[displayedColumn] | slice:0:60)+'...':
@@ -92,7 +91,8 @@ title==='Kategori Berita'}">
                     helperConditionListTable(displayedColumn,'eventSELESAI')||
                     helperConditionListTable(displayedColumn,'beritaTGL') ||
                     helperConditionListTable(displayedColumn,'create_date') ||
-                    helperConditionListTable(displayedColumn,'update_date')">
+                    helperConditionListTable(displayedColumn,'update_date') ||
+                    helperConditionListTable(displayedColumn,'fotoobyekTGLAMBIL')">
                     {{element[displayedColumn] | date}}
                     </div>
 

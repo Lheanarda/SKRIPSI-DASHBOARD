@@ -1,63 +1,17 @@
+import { environment } from './../../environments/environment';
 import { FotoWisata } from './../model/fotowisata.model';
 import { ObyekWisata } from './../model/obyek-wisata.model';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ObyekwisataService {
 
-obyeks:ObyekWisata[]=[
-  {
-    obyekKODE:'33.08.02-W01',
-    kategoriKODE:'KW01',
-    kecamatanKODE:'33.08.02',
-    obyekALAMAT:'Jl. Balaputradewa, Kecamatan Borobudur, Kabupaten Magelang, Jawa Tengah',
-    obyekDEFINISI:"Jl. Balaputradewa, Kecamatan Borobudur, Kabupaten Magelang, Jawa Tengah",
-    obyekDERAJAT_E:110,
-    obyekDERAJAT_S:7,
-    obyekDETIK_E:13,
-    obyekDETIK_S:15,
-    obyekFOTO:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Borobudur_Stupa_Merapi.jpg',
-    obyekJAMBUKA:new Date().getHours()+'',
-    obyekJAMTUTUP:new Date().getHours()+'',
-    obyekKEMUDAHAN:1,
-    obyekKETERANGAN:'Dinasti Sailendra membangun peninggalan Budha terbesar di dunia antara 780-840 Masehi.',
-    obyekKETINGGIAN:230,
-    obyekLATITUDE:-7.60608339310,
-    obyekLONGITUDE:110.21905517578,
-    obyekMENIT_E:13,
-    obyekMENIT_S:55,
-    obyekNAMA:'Candi Borobudur',
-    obyekPOPULARITAS:1,
-    obyekWAKTUKUNJUNG:120
 
-  },{
-    obyekKODE:'33.08.02-W01',
-    kategoriKODE:'KW01',
-    kecamatanKODE:'33.08.02',
-    obyekALAMAT:'Jl. Balaputradewa, Kecamatan Borobudur, Kabupaten Magelang, Jawa Tengah',
-    obyekDEFINISI:"Jl. Balaputradewa, Kecamatan Borobudur, Kabupaten Magelang, Jawa Tengah",
-    obyekDERAJAT_E:110,
-    obyekDERAJAT_S:7,
-    obyekDETIK_E:13,
-    obyekDETIK_S:15,
-    obyekFOTO:'https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/2001162996889/Candi%2520Prambanan%2520Tickets-2ef92ea4-bdac-422c-ae26-fae5752c7533.jpeg?_src=imagekit&tr=c-at_max,h-512,q-60,w-720',
-    obyekJAMBUKA:new Date().getHours()+'',
-    obyekJAMTUTUP:new Date().getHours()+'',
-    obyekKEMUDAHAN:1,
-    obyekKETERANGAN:'Dinasti Sailendra membangun peninggalan Budha terbesar di dunia antara 780-840 Masehi.',
-    obyekKETINGGIAN:230,
-    obyekLATITUDE:-7.60608339310,
-    obyekLONGITUDE:110.21905517578,
-    obyekMENIT_E:13,
-    obyekMENIT_S:55,
-    obyekNAMA:'Candi Prambanan',
-    obyekPOPULARITAS:1,
-    obyekWAKTUKUNJUNG:120
-
-  },
-];
 
 fotoWisatas:FotoWisata[]=[
   {
@@ -77,6 +31,104 @@ fotoWisatas:FotoWisata[]=[
     fotoobyekGAMBAR:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Borobudur_Stupa_Merapi.jpg'
   }
 ]
-constructor() { }
+  constructor(private http:HttpClient,private snackbar:MatSnackBar) { }
 
+  loadObyekWisata = new Subject<ObyekWisata[]>();
+
+  getAllObyekWisata(){
+    this.http.get(`${environment.endpoint}/obyek`,{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    }).subscribe((res:any)=>{
+      const data:ObyekWisata[] = res.data;
+      if(res.success && data.length>0){
+        this.loadObyekWisata.next(data);
+      }else{
+        this.snackbar.open('Failed to fetch data','Dismiss',{duration:3000});
+      }
+    },err=>{
+      this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000})
+    })
+  }
+
+  getAllObyekWisataForOptions(){
+    return this.http.get(`${environment.endpoint}/obyek`,{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    });
+  }
+
+  getSingleObyekWisata(obyekKODE:string){
+    return this.http.get(`${environment.endpoint}/obyek/${obyekKODE}`,{
+      headers:{Authorization:environment.apiKey}
+    })
+  }
+
+  addObyekWisata(obyek:ObyekWisata){
+    return this.http.post(`${environment.endpoint}/obyek`,{
+      obyekKODE:obyek.obyekKODE,
+      obyekNAMA:obyek.obyekNAMA,
+      kecamatanKODE:obyek.kecamatanKODE,
+      kategoriKODE:obyek.kategoriKODE,
+      obyekALAMAT:obyek.obyekALAMAT,
+      obyekDERAJAT_S:obyek.obyekDERAJAT_S,
+      obyekMENIT_S:obyek.obyekMENIT_S,
+      obyekDETIK_S:obyek.obyekDETIK_S,
+      obyekLATITUDE:obyek.obyekLATITUDE,
+      obyekDERAJAT_E:obyek.obyekDERAJAT_E,
+      obyekMENIT_E:obyek.obyekMENIT_E,
+      obyekDETIK_E:obyek.obyekDETIK_E,
+      obyekLONGITUDE:obyek.obyekLONGITUDE,
+      obyekKETINGGIAN:obyek.obyekKETINGGIAN,
+      obyekJAMBUKA:obyek.obyekJAMBUKA,
+      obyekJAMTUTUP:obyek.obyekJAMTUTUP,
+      obyekWAKTUKUNJUNG:obyek.obyekWAKTUKUNJUNG,
+      obyekPOPULARITAS:obyek.obyekPOPULARITAS,
+      obyekKEMUDAHAN:obyek.obyekKEMUDAHAN,
+      obyekDEFINISI:obyek.obyekDEFINISI,
+      obyekKETERANGAN:obyek.obyekKETERANGAN,
+      obyekFOTO:obyek.obyekFOTO
+    },{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    })
+  }
+
+  updateObyekWisata(obyek:ObyekWisata,obyekKODE:string){
+    return this.http.put(`${environment.endpoint}/obyek/${obyekKODE}`,{
+      obyekKODE:obyek.obyekKODE,
+      obyekNAMA:obyek.obyekNAMA,
+      kecamatanKODE:obyek.kecamatanKODE,
+      kategoriKODE:obyek.kategoriKODE,
+      obyekALAMAT:obyek.obyekALAMAT,
+      obyekDERAJAT_S:obyek.obyekDERAJAT_S,
+      obyekMENIT_S:obyek.obyekMENIT_S,
+      obyekDETIK_S:obyek.obyekDETIK_S,
+      obyekLATITUDE:obyek.obyekLATITUDE,
+      obyekDERAJAT_E:obyek.obyekDERAJAT_E,
+      obyekMENIT_E:obyek.obyekMENIT_E,
+      obyekDETIK_E:obyek.obyekDETIK_E,
+      obyekLONGITUDE:obyek.obyekLONGITUDE,
+      obyekKETINGGIAN:obyek.obyekKETINGGIAN,
+      obyekJAMBUKA:obyek.obyekJAMBUKA,
+      obyekJAMTUTUP:obyek.obyekJAMTUTUP,
+      obyekWAKTUKUNJUNG:obyek.obyekWAKTUKUNJUNG,
+      obyekPOPULARITAS:obyek.obyekPOPULARITAS,
+      obyekKEMUDAHAN:obyek.obyekKEMUDAHAN,
+      obyekDEFINISI:obyek.obyekDEFINISI,
+      obyekKETERANGAN:obyek.obyekKETERANGAN,
+      obyekFOTO:obyek.obyekFOTO
+    },{
+      headers:{Authorization:environment.apiKey}
+    })
+  }
+
+  deleteObyekWisata(obyekKODE:string){
+    return this.http.delete(`${environment.endpoint}/obyek/${obyekKODE}`,{
+      headers:{Authorization:environment.apiKey}
+    })
+  }
 }

@@ -1,4 +1,5 @@
-<form class="form-modal">
+<form class="form-modal" [formGroup]="beritaForm" (ngSubmit)="onSubmit()">
+  <mat-spinner [diameter]="20" class="top-spinner" *ngIf="loadData"></mat-spinner>
   <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Berita</mat-card-title>
 
   <mat-dialog-content>
@@ -6,7 +7,7 @@
       <div class="col-md-4">
         <mat-form-field class="full-width">
           <mat-label>Kode Berita</mat-label>
-          <input matInput type="text" required>
+          <input matInput type="text" required formControlName="beritaKODE">
           <mat-hint>Input kode berita</mat-hint>
           <mat-error>Kode berita is required</mat-error>
         </mat-form-field>
@@ -15,20 +16,21 @@
       <div class="col-md-4">
         <mat-form-field class="full-width">
           <mat-label>Judul Berita</mat-label>
-          <input matInput type="text" required/>
+          <input matInput type="text" required formControlName="beritaJUDUL" />
           <mat-hint>Input judul berita</mat-hint>
           <mat-error>Judul berita is required</mat-error>
         </mat-form-field>
       </div>
 
       <div class="col-md-4">
-        <mat-form-field class="full-width">
-          <mat-label>Foto Thumbnail Berita</mat-label>
-          <ngx-mat-file-input placeholder="Upload foto thumbnail berita" required></ngx-mat-file-input>
-          <mat-icon matSuffix>cloud_upload</mat-icon>
-          <mat-hint>Input thumbnail berita</mat-hint>
-          <mat-error>thumbnail berita is required</mat-error>
-        </mat-form-field>
+        <div class="file">
+          <input type="file" id="file" class="file__input" (change)="onReadFile($event)" accept=".png,.jpeg,.jpg"
+          />
+          <label for="file" class="file__label">{{!beritaForm.value.beritaGAMBAR? 'Pilih Foto Thumbnail Berita':beritaForm.value.beritaGAMBAR}}
+            <mat-icon class="file__icon">cloud_upload</mat-icon>
+          </label>
+          <label class="file__hint">Pilih Gambar dari Local Storage</label>
+        </div>
       </div>
     </div>
 
@@ -36,7 +38,7 @@
       <div class="col-md-4">
         <mat-form-field class="full-width">
           <mat-label>Tanggal Berita</mat-label>
-          <input matInput [matDatepicker]="mdate" required/>
+          <input matInput [matDatepicker]="mdate" required formControlName="beritaTGL" />
           <mat-datepicker-toggle [for]="mdate" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #mdate startView="year"></mat-datepicker>
           <mat-hint>Input tanggal berita</mat-hint>
@@ -47,18 +49,17 @@
       <div class="col-md-4">
         <mat-form-field class="full-width">
           <mat-label>Sumber berita</mat-label>
-          <input type="text" matInput required/>
+          <input type="text" matInput required formControlName="beritaSUMBER" />
           <mat-hint>Input sumber berita</mat-hint>
           <mat-error>sumber berita is required</mat-error>
         </mat-form-field>
       </div>
 
       <div class="col-md-4">
-        <mat-form-field class="full-width" >
+        <mat-form-field class="full-width" *ngIf="kategoris">
           <mat-label>Kategori Berita</mat-label>
-          <mat-select required>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
+          <mat-select required formControlName="kategoriberitaKODE" >
+            <mat-option *ngFor="let kategori of kategoris" [value]="kategori.kategoriberitaKODE">{{kategori.kategoriberitaNAMA}} </mat-option>
           </mat-select>
           <mat-hint>Pilih kategori berita</mat-hint>
           <mat-error>kategori berita is required</mat-error>
@@ -69,21 +70,19 @@
     <div class="row mb-3">
 
       <div class="col-md-6">
-        <mat-form-field class="full-width" appearance="outline">
+        <mat-form-field class="full-width"  *ngIf="kabupatens">
           <mat-label>Kabupaten</mat-label>
-          <mat-select required>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
+          <mat-select required formControlName="kabupatenKODE" >
+            <mat-option *ngFor="let kabupaten of kabupatens" [value]="kabupaten.kabupatenKODE">{{kabupaten.kabupatenNAMA}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
       <div class="col-md-6">
-        <mat-form-field class="full-width" appearance="outline">
+        <mat-form-field class="full-width"  *ngIf="kegiatans">
           <mat-label>Kegiatan</mat-label>
-          <mat-select>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
+          <mat-select formControlName="eventKODE">
+            <mat-option *ngFor="let kegiatan of kegiatans" [value]="kegiatan.eventKODE">{{kegiatan.eventNAMA}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -91,7 +90,14 @@
 
     <div class="row mb-3">
       <div class="col-md-12">
-        <ckeditor class="full-width" [editor]="Editor" ></ckeditor>
+        <ckeditor
+        *ngIf="(data.mode==='edit' && beritaForm.value.beritaISI || data.mode==='new')"
+          [editor]="Editor"
+          [config]="config"
+          [data]="beritaForm.value.beritaISI"
+          (change)="onEditorChange($event)"
+          (ready)="onEditorReady($event)"
+          spellcheck="false"></ckeditor>
       </div>
     </div>
 
@@ -102,7 +108,15 @@
     <div class="buttons full-width">
       <button mat-button mat-raised-button mat-dialog-close>Close</button>
       <button mat-button mat-raised-button type="reset" >Reset</button>
-      <button mat-button mat-raised-button>Submit</button>
+      <button mat-button mat-raised-button [disabled]="!beritaForm.valid">Submit</button>
+      <mat-spinner [diameter]="20" *ngIf="loading" ></mat-spinner>
     </div>
+  </div>
+  <!-- INDICATOR -->
+  <div class="indicator" *ngIf="isUpload" [@fadeIn]>
+    <p class="indicator-text">Uploading image to cloud...</p>
+    <mat-progress-bar mode="indeterminate" *ngIf="(isUpload==='uploading')"></mat-progress-bar>
+    <div class="info" *ngIf="(isUpload==='success')" [@fadeIn]>Success <mat-icon class="info-icon">check_circle</mat-icon></div>
+    <div class="info" *ngIf="(isUpload==='failed')" [@fadeIn]>Failed <mat-icon class="info-icon">error</mat-icon></div>
   </div>
 </form>

@@ -1,4 +1,6 @@
-<form class="form-modal">
+
+<form class="form-modal" [formGroup]="obyekForm" (ngSubmit)="onSubmit()">
+  <mat-spinner [diameter]="20" class="top-spinner" *ngIf="loadData"></mat-spinner>
   <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Wisata</mat-card-title>
 
   <mat-dialog-content>
@@ -7,7 +9,8 @@
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Kode Wisata</mat-label>
-          <input matInput type="text" required>
+          <input matInput type="text" required
+          formControlName="obyekKODE">
           <mat-hint>Input kode wisata</mat-hint>
           <mat-error>kode wisata is required</mat-error>
         </mat-form-field>
@@ -15,7 +18,8 @@
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Nama Wisata</mat-label>
-          <input matInput type="text" required>
+          <input matInput type="text" required
+          formControlName="obyekNAMA">
           <mat-hint>Input nama wisata</mat-hint>
           <mat-error>nama wisata is required</mat-error>
         </mat-form-field>
@@ -24,7 +28,8 @@
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Waktu Kunjung</mat-label>
-          <input matInput type="number" required>
+          <input matInput type="number" required
+          formControlName="obyekWAKTUKUNJUNG">
           <mat-hint>Input waktu kunjung dalam menit</mat-hint>
           <mat-error>waktu kunjung is required</mat-error>
         </mat-form-field>
@@ -36,9 +41,12 @@
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Popularitas</mat-label>
-          <mat-select required>
-            <mat-option value="W01">Sangat Populer</mat-option>
-            <mat-option value="W02">Populer</mat-option>
+          <mat-select required formControlName="obyekPOPULARITAS">
+            <mat-option [value]="1">Sangat Populer</mat-option>
+            <mat-option [value]="2">Populer</mat-option>
+            <mat-option [value]="3">Agak Populer</mat-option>
+            <mat-option [value]="4">Tidak Populer</mat-option>
+            <mat-option [value]="5"> Sangat Tidak Populer</mat-option>
           </mat-select>
           <mat-hint>Pilih popularitas wisata</mat-hint>
           <mat-error>popularitas is required</mat-error>
@@ -48,9 +56,12 @@
       <div class="col-md-4">
         <mat-form-field class="full-width" >
           <mat-label>Kemudahan Akses</mat-label>
-          <mat-select required>
-            <mat-option value="W01">Sangat Mudah</mat-option>
-            <mat-option value="W02">Mudah</mat-option>
+          <mat-select required formControlName="obyekKEMUDAHAN">
+            <mat-option [value]="1">Sangat Mudah</mat-option>
+            <mat-option [value]="2">Mudah</mat-option>
+            <mat-option [value]="3">Agak Mudah</mat-option>
+            <mat-option [value]="4">Tidak Mudah</mat-option>
+            <mat-option [value]="5">Sangat Sulit</mat-option>
           </mat-select>
           <mat-hint>Pilih kemudahan akses wisata</mat-hint>
           <mat-error>kemudahan akses is required</mat-error>
@@ -58,48 +69,48 @@
       </div>
 
       <div class="col-md-4">
-        <mat-form-field  class="full-width">
-          <mat-label>Upload Icon wisata</mat-label>
-          <ngx-mat-file-input required  placeholder="Upload Foto Obyek Wisata" ></ngx-mat-file-input>
-          <mat-icon matSuffix>cloud_upload</mat-icon>
-          <mat-hint>Pilih icon wisata</mat-hint>
-          <mat-error>icon is required</mat-error>
-        </mat-form-field>
+        <div class="file">
+          <input type="file" id="file" class="file__input" (change)="onReadFile($event)" accept=".png,.jpeg,.jpg"
+          />
+          <label for="file" class="file__label">{{!obyekForm.value.obyekFOTO? 'Pilih Foto obyek wisata':obyekForm.value.obyekFOTO}}
+            <mat-icon class="file__icon">cloud_upload</mat-icon>
+          </label>
+          <label class="file__hint">Pilih Gambar dari Local Storage</label>
+        </div>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-6">
         <mat-form-field class="full-width">
           <mat-label>Alamat Wisata</mat-label>
-          <textarea matInput required></textarea>
+          <textarea matInput required
+          formControlName="obyekALAMAT"></textarea>
           <mat-hint>Input alamat wisata</mat-hint>
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field class="full-width">
           <mat-label>Keterangan Wisata</mat-label>
-          <textarea matInput></textarea>
+          <textarea matInput formControlName="obyekKETERANGAN" ></textarea>
           <mat-hint>Input keterangan wisata</mat-hint>
         </mat-form-field>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-6">
-        <mat-form-field class="full-width" >
+        <mat-form-field class="full-width" *ngIf="katWisatas">
           <mat-label>Kategori Wisata</mat-label>
-          <mat-select required>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
+          <mat-select required formControlName="kategoriKODE">
+            <mat-option *ngFor="let kat of katWisatas" [value]="kat.kategoriKODE">{{kat.kategoriNAMA}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
       <div class="col-md-6">
-        <mat-form-field class="full-width" >
+        <mat-form-field class="full-width" *ngIf="kecamatans">
           <mat-label>Kecamatan</mat-label>
-          <mat-select required>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
+          <mat-select required formControlName="kecamatanKODE" >
+            <mat-option *ngFor="let kec of kecamatans" [value]="kec.kecamatanKODE">{{kec.kecamatanNAMA}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -107,28 +118,25 @@
     <div class="row mb-3 ">
       <div class="col-md-3">
         <p style="color:#7a7a7a">Jam Buka</p>
-        <ngx-mat-timepicker  [ngModel]="test" name="test"></ngx-mat-timepicker>
+        <ngx-mat-timepicker  formControlName="obyekJAMBUKA"></ngx-mat-timepicker>
       </div>
       <div class="col-md-3">
         <p style="color:#7a7a7a">Jam Tutup</p>
-        <ngx-mat-timepicker [ngModel]="test" name="test"></ngx-mat-timepicker>
+        <ngx-mat-timepicker formControlName="obyekJAMTUTUP"></ngx-mat-timepicker>
       </div>
       <div class="col-md-6 mt-1">
         <mat-form-field class="full-width mb-3">
           <mat-label>Definisi Wisata</mat-label>
-          <textarea matInput></textarea>
+          <textarea matInput formControlName="obyekDEFINISI"></textarea>
           <mat-hint>Input definisi wisata</mat-hint>
         </mat-form-field>
         <mat-form-field class="full-width ">
           <mat-label>Ketinggian</mat-label>
-          <input matInput>
+          <input matInput formControlName="obyekKETINGGIAN">
           <mat-hint>Input ketinggian wisata</mat-hint>
         </mat-form-field>
       </div>
     </div>
-
-
-
 
     <h2>Koordinat Wisata</h2>
     <div class="row mb-3">
@@ -136,7 +144,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Longitude</mat-label>
-          <input required matInput type="number">
+          <input required matInput type="number" formControlName="obyekLONGITUDE">
           <mat-hint>Input longitude wisata</mat-hint>
           <mat-error>longitude is required</mat-error>
         </mat-form-field>
@@ -145,7 +153,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Detik Timur</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="obyekDETIK_E">
           <mat-hint>Input detik timur wisata</mat-hint>
         </mat-form-field>
       </div>
@@ -153,7 +161,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Menit Timur</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="obyekMENIT_E">
           <mat-hint>Input menit timur wisata</mat-hint>
         </mat-form-field>
       </div>
@@ -161,7 +169,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Derajat Timur</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="obyekDERAJAT_E">
           <mat-hint>Input derajat timur wisata</mat-hint>
         </mat-form-field>
       </div>
@@ -171,7 +179,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Latitude</mat-label>
-          <input required matInput type="number">
+          <input required matInput type="number" formControlName="obyekLATITUDE">
           <mat-hint>Input latiude wisata</mat-hint>
           <mat-error>latiude is required</mat-error>
         </mat-form-field>
@@ -180,7 +188,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Detik selatan</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="obyekDETIK_S">
           <mat-hint>Input detik selatan wisata</mat-hint>
         </mat-form-field>
       </div>
@@ -188,7 +196,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Menit selatan</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="obyekMENIT_S">
           <mat-hint>Input menit selatan wisata</mat-hint>
         </mat-form-field>
       </div>
@@ -196,7 +204,7 @@
       <div class="col-md-3">
         <mat-form-field class="full-width ">
           <mat-label>Derajat selatan</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="obyekDERAJAT_S">
           <mat-hint>Input derajat selatan wisata</mat-hint>
         </mat-form-field>
       </div>
@@ -209,7 +217,8 @@
     <div class="buttons full-width">
       <button mat-button mat-raised-button mat-dialog-close>Close</button>
       <button mat-button mat-raised-button type="reset" >Reset</button>
-      <button mat-button mat-raised-button>Submit</button>
+      <button mat-button mat-raised-button [disabled]="obyekForm.invalid">Submit</button>
+      <mat-spinner [diameter]="20" *ngIf="loading" ></mat-spinner>
     </div>
   </div>
 </form>

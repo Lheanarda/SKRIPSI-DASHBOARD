@@ -1,13 +1,13 @@
-<form class="form-modal">
+<form class="form-modal" [formGroup]="jarakForm" (ngSubmit)="onSubmit()">
+  <mat-spinner [diameter]="20" class="top-spinner" *ngIf="loadData"></mat-spinner>
   <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Jarak Antar Wisata</mat-card-title>
   <mat-dialog-content>
     <div class="row mb-3">
       <div class="col-md-6">
-        <mat-form-field class="full-width" >
+        <mat-form-field class="full-width" *ngIf="obyekWisata">
           <mat-label>Destinasi Awal</mat-label>
-          <mat-select required>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
+          <mat-select required formControlName="obyekKODEasal">
+            <mat-option *ngFor="let obyek of obyekWisata" [value]="obyek.obyekKODE">{{obyek.obyekNAMA}}</mat-option>
           </mat-select>
           <mat-hint>Input destinasi awal wisata</mat-hint>
           <mat-error>destinasi awal is required</mat-error>
@@ -15,11 +15,10 @@
       </div>
 
       <div class="col-md-6">
-        <mat-form-field class="full-width" >
+        <mat-form-field class="full-width" *ngIf="obyekWisata">
           <mat-label>Destinasi Tujuan</mat-label>
-          <mat-select required>
-            <mat-option value="W01">KODE NAMA</mat-option>
-            <mat-option value="W02">KODE NAMA</mat-option>
+          <mat-select required formControlName="obyekKODEtujuan">
+            <mat-option *ngFor="let obyek of obyekWisata" [value]="obyek.obyekKODE">{{obyek.obyekNAMA}}</mat-option>
           </mat-select>
           <mat-hint>Input destinasi tujuan wisata</mat-hint>
           <mat-error>destinasi tujuan is required</mat-error>
@@ -31,7 +30,7 @@
       <div class="col-md-6">
         <mat-form-field class="full-width ">
           <mat-label>Jarak </mat-label>
-          <input matInput type="number" required>
+          <input matInput type="number" required formControlName="obyekjarak">
           <span matSuffix>KM</span>
           <mat-hint>Input jarak antar wisata</mat-hint>
           <mat-error>jarak is required</mat-error>
@@ -40,7 +39,7 @@
       <div class="col-md-6">
         <mat-form-field class="full-width ">
           <mat-label>Waktu Tempuh </mat-label>
-          <input matInput type="number" required>
+          <input matInput type="number" required formControlName="obyektempuh">
           <span matSuffix>menit</span>
           <mat-hint>Input waktu tempuh antar wisata</mat-hint>
           <mat-error>waktu tempuh is required</mat-error>
@@ -52,7 +51,7 @@
       <div class="col-md-12">
         <mat-form-field class="full-width ">
           <mat-label>Keterangan Rute</mat-label>
-          <textarea matInput ></textarea>
+          <textarea matInput formControlName="obyekRUTE"></textarea>
           <mat-hint>Input keterangan rute antar wisata</mat-hint>
           <mat-error>keterangan rute is required</mat-error>
         </mat-form-field>
@@ -64,6 +63,7 @@
       <button mat-button mat-raised-button mat-dialog-close>Close</button>
       <button mat-button mat-raised-button type="reset" >Reset</button>
       <button mat-button mat-raised-button>Submit</button>
+      <mat-spinner [diameter]="20" *ngIf="loading" ></mat-spinner>
     </div>
   </div>
 </form>

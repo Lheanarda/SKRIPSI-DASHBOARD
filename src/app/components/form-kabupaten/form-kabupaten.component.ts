@@ -21,11 +21,13 @@ export class FormKabupatenComponent implements OnInit {
 
   //image ctrl
   currentImageFile:any;
+  firstImage:string;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
   private kabService:KabupatenService,
   private dialogRef:MatDialogRef<FormKabupatenComponent>,
   private snackbar:MatSnackBar,
+  private imgService:ImageService,
   private imageService:ImageService) {}
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class FormKabupatenComponent implements OnInit {
           kabupatenFOTOICON:data.kabupatenFOTOICON,
           kabupatenFOTOICONKET:data.kabupatenFOTOICONKET
         });
+        this.firstImage = data.kabupatenFOTOICON;
       })
     }
   }
@@ -112,6 +115,10 @@ export class FormKabupatenComponent implements OnInit {
       //upload image
       this.imageService.onSaveImage(this.currentImageFile,kabupaten.kabupatenFOTOICON).subscribe((res:any)=>{
         this.onAction(kabupaten);
+        if(this.data.mode==='edit'){
+          console.log('delete image')
+          this.imgService.onDeleteImage(this.firstImage);
+        }
       },err=>{
         this.loading = false;
         this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
@@ -119,10 +126,6 @@ export class FormKabupatenComponent implements OnInit {
     }else{
       this.onAction(kabupaten);
     }
-
-
-
-
   }
 
 }

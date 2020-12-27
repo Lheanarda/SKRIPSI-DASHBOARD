@@ -17,7 +17,6 @@ export class KecamatanComponent implements OnInit,OnDestroy {
 
   //displayed data
   displayedColumn:string[]=[
-    'select',
     'kecamatanKODE',
     'kecamatanNAMA',
     'kecamatanALAMAT',

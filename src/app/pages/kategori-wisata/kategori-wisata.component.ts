@@ -17,7 +17,6 @@ export class KategoriWisataComponent implements OnInit, OnDestroy {
 
   //columns data
   displayedColumn:string[]=[
-    'select',
     'kategoriKODE',
     'kategoriNAMA',
     'kategoriKET',

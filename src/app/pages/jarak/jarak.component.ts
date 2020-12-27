@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { JarakService } from './../../services/jarak.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Jarak } from 'src/app/model/jarak.model';
 
 @Component({
@@ -7,20 +8,22 @@ import { Jarak } from 'src/app/model/jarak.model';
   templateUrl: './jarak.component.html',
   styleUrls: ['./jarak.component.scss']
 })
-export class JarakComponent implements OnInit {
+export class JarakComponent implements OnInit,OnDestroy {
 
   //data source
   jaraks:Jarak[];
-
+  load:boolean;
+  jarakSubs:Subscription;
 
   //columns data
   displayedColumns:string[]=[
-    'select',
-    'obyekKODEasal',
-    'obyekKODEtujuan',
+    'namaASAL',
+    'namaTUJUAN',
     'obyekjarak',
     'obyektempuh',
     'obyekRUTE',
+    'create_date',
+    'update_date',
     'update',
     'delete'
   ]
@@ -32,13 +35,23 @@ export class JarakComponent implements OnInit {
     'Jarak (KM)',
     'Waktu Tempuh (menit)',
     'Keterangan Rute',
+    'Create Date',
+    'Update Date',
     'Update',
     'Delete'
   ]
   constructor(private jarakService:JarakService) { }
 
   ngOnInit() {
-    this.jaraks = this.jarakService.jaraks;
+    this.load = true;
+    this.jarakService.getAllJarakObyek();
+    this.jarakSubs = this.jarakService.loadJarak.subscribe((data:Jarak[])=>{
+      this.load = false;
+      this.jaraks = data;
+    })
   }
 
+  ngOnDestroy(){
+    this.jarakSubs.unsubscribe();
+  }
 }

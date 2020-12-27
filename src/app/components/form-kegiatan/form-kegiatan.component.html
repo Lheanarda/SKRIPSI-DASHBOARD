@@ -1,11 +1,23 @@
-<form class="form-modal">
+<form class="form-modal" [formGroup]="kegiatanForm" (ngSubmit)="onSubmit()">
+  <mat-spinner [diameter]="20" class="top-spinner" *ngIf="loadData"></mat-spinner>
   <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Kegiatan</mat-card-title>
 
   <div class="row mb-3">
     <div class="col-md-12">
       <mat-form-field class="full-width">
+        <mat-label>Kode Kegiatan</mat-label>
+        <input type="text" matInput required formControlName="eventKODE" />
+        <mat-hint>Input Kode Kegiatan</mat-hint>
+        <mat-error>Kode Kegiatan is required</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <mat-form-field class="full-width">
         <mat-label>Nama Event</mat-label>
-        <input type="text" matInput required/>
+        <input type="text" matInput required formControlName="eventNAMA" />
         <mat-hint>Input nama event</mat-hint>
         <mat-error>nama event is required</mat-error>
       </mat-form-field>
@@ -16,18 +28,27 @@
     <div class="col-md-12">
       <mat-form-field class="full-width">
         <mat-label>Keterangan Event</mat-label>
-        <input type="text" matInput/>
+        <input type="text" matInput formControlName="eventKET" required/>
         <mat-hint>Input keterangan event</mat-hint>
         <mat-error>keterangan event is required</mat-error>
       </mat-form-field>
     </div>
   </div>
 
+  <div class="file">
+    <input type="file" id="file" class="file__input" (change)="onReadFile($event)" accept=".png,.jpeg,.jpg"
+    />
+    <label for="file" class="file__label">{{!kegiatanForm.value.eventPOSTER? 'Pilih Foto Icon Kabupaten':kegiatanForm.value.eventPOSTER}}
+      <mat-icon class="file__icon">cloud_upload</mat-icon>
+    </label>
+    <label class="file__hint">Pilih Gambar dari Local Storage</label>
+  </div>
+
   <div class="row">
     <div class="col-md-6">
       <mat-form-field class="full-width">
         <mat-label>Tanggal Mulai</mat-label>
-        <input matInput [matDatepicker]="startDate" required />
+        <input matInput [matDatepicker]="startDate" required formControlName="eventMULAI" />
         <mat-datepicker-toggle [for]="startDate" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #startDate startview="year"></mat-datepicker>
         <mat-hint>Input tanggal mulai</mat-hint>
@@ -37,7 +58,7 @@
     <div class="col-md-6">
       <mat-form-field class="full-width">
         <mat-label>Tanggal Selesai</mat-label>
-        <input matInput [matDatepicker]="endDate" required />
+        <input matInput [matDatepicker]="endDate" required formControlName="eventSELESAI" />
         <mat-datepicker-toggle [for]="endDate" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #endDate startView="year"></mat-datepicker>
         <mat-hint>Input tanggal selesai</mat-hint>
@@ -50,7 +71,8 @@
     <div class="buttons full-width">
       <button mat-button mat-raised-button mat-dialog-close>Close</button>
       <button mat-button mat-raised-button type="reset" >Reset</button>
-      <button mat-button mat-raised-button>Submit</button>
+      <button mat-button mat-raised-button [disabled]="kegiatanForm.invalid">Submit</button>
+      <mat-spinner [diameter]="20" *ngIf="loading" ></mat-spinner>
     </div>
   </div>
 </form>

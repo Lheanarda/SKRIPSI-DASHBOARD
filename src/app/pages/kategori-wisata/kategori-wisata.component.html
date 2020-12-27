@@ -1,4 +1,5 @@
 <app-navigation>
+  <mat-progress-bar mode="query" *ngIf="load"></mat-progress-bar>
   <app-list-table
   *ngIf="kategoris"
   [displayedColumns]="displayedColumn"

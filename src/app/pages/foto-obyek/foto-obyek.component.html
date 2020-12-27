@@ -1,10 +1,11 @@
+
 <app-navigation>
   <mat-progress-bar mode="query" *ngIf="load"></mat-progress-bar>
   <app-list-table
-  *ngIf="kategoris"
-  [title]="'Kategori Berita'"
-  [listSource]="kategoris"
+  *ngIf="fotoWisatas"
+  [displayedColumns]="displayedColumns"
   [headerColumns]="headerColumns"
-  [displayedColumns]="displayedColumn"
+  [listSource]="fotoWisatas"
+  [title]="'Foto Obyek Wisata'"
   ></app-list-table>
 </app-navigation>

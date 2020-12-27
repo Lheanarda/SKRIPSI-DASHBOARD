@@ -1,20 +1,22 @@
+import { Subscription } from 'rxjs';
 import { BeritaFoto } from './../../model/beritafoto.model';
 import { BeritaService } from './../../services/berita.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Berita } from 'src/app/model/berita.model';
 @Component({
   selector: 'app-berita',
   templateUrl: './berita.component.html',
   styleUrls: ['./berita.component.scss']
 })
-export class BeritaComponent implements OnInit {
+export class BeritaComponent implements OnInit,OnDestroy {
 
   //data source
   beritas:Berita[];
+  load:boolean;
+  beritaSubs:Subscription;
 
   //columns data
   displayedColumns:string[]=[
-    'select',
     'beritaGAMBAR',
     'beritaKODE',
     'beritaJUDUL',
@@ -24,6 +26,8 @@ export class BeritaComponent implements OnInit {
     'kategoriberitaKODE',
     'kabupatenKODE',
     'eventKODE',
+    'create_date',
+    'update_date',
     'update',
     'delete'
   ];
@@ -39,6 +43,8 @@ export class BeritaComponent implements OnInit {
     'Kode Kategori Berita',
     'Kode Kabupaten',
     'Kode Event',
+    'Create Date',
+    'Update Date',
     'Update',
     'Delete'
   ];
@@ -64,8 +70,16 @@ export class BeritaComponent implements OnInit {
   constructor(private beritaService:BeritaService) { }
 
   ngOnInit() {
-    this.beritas = this.beritaService.beritas;
-    this.beritaFotos = this.beritaService.beritafotos;
+    this.load = true;
+    this.beritaService.getAllBerita();
+    this.beritaSubs = this.beritaService.loadBerita.subscribe((data:Berita[])=>{
+      this.load = false;
+      this.beritas = data;
+    })
+  }
+
+  ngOnDestroy(){
+    this.beritaSubs.unsubscribe();
   }
 
 }

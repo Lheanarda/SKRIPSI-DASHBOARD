@@ -1,3 +1,5 @@
+import { FotoObyekComponent } from './pages/foto-obyek/foto-obyek.component';
+import { FasilitasObyekComponent } from './pages/fasilitas-obyek/fasilitas-obyek.component';
 import { CustomStyleInputComponent } from './components/custom-style-input/custom-style-input.component';
 import { FormFotoWisataComponent } from './components/form-foto-wisata/form-foto-wisata.component';
 import { FormFasilitasObyekComponent } from './components/form-fasilitas-obyek/form-fasilitas-obyek.component';
@@ -42,8 +44,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AngularFireStorageModule } from 'angularfire2/storage';
-import { AngularFireModule } from 'angularfire2';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,9 @@ import { AngularFireModule } from 'angularfire2';
     JarakComponent,
     FormBeritaComponent,
     FormFotoWisataComponent,
-    CustomStyleInputComponent
+    CustomStyleInputComponent,
+    FasilitasObyekComponent,
+    FotoObyekComponent
   ],
   imports: [
     BrowserModule,
@@ -93,13 +95,6 @@ import { AngularFireModule } from 'angularfire2';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    AngularFireStorageModule,
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyD_vSEwAdi4mmJrhqXXPF_KCRSlpdBq164",
-      authDomain: "pesona-jawa.firebaseapp.com",
-      projectId: "pesona-jawa",
-      storageBucket: "pesona-jawa.appspot.com",
-    })
   ],
   entryComponents:[
     FormFasilitasComponent,
@@ -112,7 +107,8 @@ import { AngularFireModule } from 'angularfire2';
     FormWisataComponent,
     FormBeritaComponent,
     FormJarakComponent,
-    FormFasilitasObyekComponent
+    FormFasilitasObyekComponent,
+    FormFotoWisataComponent
     ],
   providers: [],
   bootstrap: [AppComponent]

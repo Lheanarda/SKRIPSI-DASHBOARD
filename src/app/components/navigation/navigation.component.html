@@ -35,8 +35,10 @@
       <mat-list [class]="navigationState.wisata ? 'items items--active' : 'items'">
         <mat-list-item routerLink="/kategori-wisata" routerLinkActive="nav--active">Kategori Wisata</mat-list-item>
         <mat-list-item routerLink="/wisata" routerLinkActive="nav--active">Obyek Wisata</mat-list-item>
+        <mat-list-item routerLink="/foto-obyek" routerLinkActive="nav--active">Foto Wisata</mat-list-item>
         <mat-list-item routerLink="/jarak" routerLinkActive="nav--active">Jarak Antar Wisata</mat-list-item>
         <mat-list-item routerLink="/fasilitas" routerLinkActive="nav--active">Fasilitas</mat-list-item>
+        <mat-list-item routerLink="/fasilitas-obyek" routerLinkActive="nav--active">Fasilitas Obyek</mat-list-item>
       </mat-list>
 
       <mat-list-item (click)="navigationState.berita = !navigationState.berita">

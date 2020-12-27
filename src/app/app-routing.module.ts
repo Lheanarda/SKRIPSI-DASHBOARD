@@ -1,3 +1,5 @@
+import { FotoObyekComponent } from './pages/foto-obyek/foto-obyek.component';
+import { FasilitasObyekComponent } from './pages/fasilitas-obyek/fasilitas-obyek.component';
 import { JarakComponent } from './pages/jarak/jarak.component';
 import { KegiatanComponent } from './pages/kegiatan/kegiatan.component';
 import { WisataComponent } from './pages/wisata/wisata.component';
@@ -26,7 +28,9 @@ const appRoutes:Routes=[
   {path:'register',component:RegisterComponent},
   {path:'wisata',component:WisataComponent},
   {path:'kegiatan',component:KegiatanComponent},
-  {path:'jarak',component:JarakComponent}
+  {path:'jarak',component:JarakComponent},
+  {path:'fasilitas-obyek',component:FasilitasObyekComponent},
+  {path:'foto-obyek',component:FotoObyekComponent},
 ]
 
 @NgModule({

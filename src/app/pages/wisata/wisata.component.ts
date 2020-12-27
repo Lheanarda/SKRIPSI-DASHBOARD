@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { ObyekwisataService } from './../../services/obyekwisata.service';
 import { ObyekWisata } from './../../model/obyek-wisata.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FotoWisata } from 'src/app/model/fotowisata.model';
 
 @Component({
@@ -8,14 +9,15 @@ import { FotoWisata } from 'src/app/model/fotowisata.model';
   templateUrl: './wisata.component.html',
   styleUrls: ['./wisata.component.scss']
 })
-export class WisataComponent implements OnInit {
+export class WisataComponent implements OnInit,OnDestroy {
 
   //data source
   obyeks:ObyekWisata[];
+  load:boolean;
+  obyekSubs:Subscription;
 
   //displayed data
   dispalyedColumn:string[]=[
-    'select',
     'obyekFOTO',
     'obyekKODE',
     'obyekNAMA',
@@ -38,6 +40,8 @@ export class WisataComponent implements OnInit {
     'obyekKETERANGAN',
     'kecamatanKODE',
     'kategoriKODE',
+    'create_date',
+    'update_date',
     'update',
     'delete'
   ];
@@ -66,6 +70,8 @@ export class WisataComponent implements OnInit {
     'Keterangan',
     'Kode Kecamatan',
     'Kode Kategori',
+    'Create Date',
+    'Update Date',
     'Update',
     'Delete'
   ];
@@ -98,8 +104,16 @@ export class WisataComponent implements OnInit {
   constructor(private wisataService:ObyekwisataService) { }
 
   ngOnInit() {
-    this.obyeks = this.wisataService.obyeks;
     this.fotoobyeks = this.wisataService.fotoWisatas;
+
+    this.wisataService.getAllObyekWisata();
+    this.obyekSubs = this.wisataService.loadObyekWisata.subscribe((data:ObyekWisata[])=>{
+      this.load = false;
+      this.obyeks = data;
+    })
   }
 
+  ngOnDestroy(){
+    this.obyekSubs.unsubscribe();
+  }
 }

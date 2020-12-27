@@ -17,7 +17,6 @@ export class KabupatenComponent implements OnInit, OnDestroy {
 
   //columns data
   displayedColumns:string[]=[
-    'select',
     'kabupatenFOTOICON',
     'kabupatenKODE',
     'kabupatenNAMA',

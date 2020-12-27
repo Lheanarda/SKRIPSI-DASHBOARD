@@ -1,25 +1,24 @@
-<form class="form-modal">
+<form class="form-modal" [formGroup]="fasilObyekForm" (ngSubmit)="onSubmit()">
+  <mat-spinner [diameter]="20" class="top-spinner" *ngIf="loadData"></mat-spinner>
   <mat-card-title class="mb-4">{{data.mode==='edit'?'Update':'Tambah'}} Fasilitas Obyek Wisata</mat-card-title>
 
   <mat-dialog-content>
     <div class="row mb-3">
       <div class="col-md-6">
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" *ngIf="obyeks">
           <mat-label>Obyek Wisata</mat-label>
-          <mat-select required>
-            <mat-option value="test0">KODE NAMA</mat-option>
-            <mat-option value="test1">KODE NAMA</mat-option>
+          <mat-select required formControlName="obyekKODE">
+            <mat-option *ngFor="let obyek of obyeks" [value]="obyek.obyekKODE">{{obyek.obyekNAMA}}</mat-option>
           </mat-select>
           <mat-hint>Pilih Obyek Wisata</mat-hint>
           <mat-error>obyek wisata is required</mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6">
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" *ngIf="fasilitass">
           <mat-label>Fasilitas</mat-label>
-          <mat-select required>
-            <mat-option value="test1">KODE NAMA</mat-option>
-            <mat-option value="test2">KODE NAMA</mat-option>
+          <mat-select required formControlName="fasilitasKODE">
+            <mat-option *ngFor="let fasil of fasilitass" [value]="fasil.fasilitasKODE">{{fasil.fasilitasNAMA}}</mat-option>
           </mat-select>
           <mat-hint>Pilih fasilitas</mat-hint>
           <mat-error>fasilitas is required</mat-error>
@@ -31,7 +30,7 @@
       <div class="col-md-12">
        <mat-form-field class="full-width">
          <mat-label>Keterangan Fasilitas Wisata</mat-label>
-         <input matInput />
+         <input matInput formControlName="fasilitasobyekKET" />
          <mat-hint>Input keterangan fasilitas wisata</mat-hint>
        </mat-form-field>
       </div>
@@ -44,6 +43,7 @@
       <button mat-button mat-raised-button mat-dialog-close>Close</button>
       <button mat-button mat-raised-button type="reset" >Reset</button>
       <button mat-button mat-raised-button>Submit</button>
+      <mat-spinner [diameter]="20" *ngIf="loading" ></mat-spinner>
     </div>
   </div>
 </form>

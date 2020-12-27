@@ -18,4 +18,16 @@ export class ImageService {
       }
     });
   }
+
+  onDeleteImage(imageName:string){
+    this.http.delete(`${environment.endpoint}/image/${imageName}`,{
+      headers:{
+        Authorization:environment.apiKey
+      }
+    }).subscribe((res:any)=>{
+      console.log(res);
+    },err=>{
+      console.log(err)
+    })
+  }
 }

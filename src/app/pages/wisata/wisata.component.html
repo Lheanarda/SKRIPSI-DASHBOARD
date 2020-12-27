@@ -1,17 +1,10 @@
 <app-navigation>
+  <mat-progress-bar mode="query" *ngIf="load"></mat-progress-bar>
   <app-list-table
+  *ngIf="obyeks"
   [listSource]="obyeks"
   [title]="'Obyek Wisata'"
   [headerColumns]="headerColumns"
   [displayedColumns]="dispalyedColumn"
   ></app-list-table>
-
-  <div class="mt-5">
-    <app-list-table
-    [title]="'Foto Obyek Wisata'"
-    [listSource]="fotoobyeks"
-    [headerColumns]="headerColumnsFoto"
-    [displayedColumns]="displayedColumnsFoto"
-    ></app-list-table>
-  </div>
 </app-navigation>

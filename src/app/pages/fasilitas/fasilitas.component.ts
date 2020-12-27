@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { FasilitasObyek } from './../../model/fasilitas-obyek.model';
 import { FasilitasService } from './../../services/fasilitas.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Fasilitas } from 'src/app/model/fasilitas.model';
 
 @Component({
@@ -8,17 +9,20 @@ import { Fasilitas } from 'src/app/model/fasilitas.model';
   templateUrl: './fasilitas.component.html',
   styleUrls: ['./fasilitas.component.scss']
 })
-export class FasilitasComponent implements OnInit {
+export class FasilitasComponent implements OnInit,OnDestroy {
 
   //data source
   fasilitass:Fasilitas[];
+  load:boolean;
+  fasilitasSubs:Subscription;
 
   //displayed data
   displayedColumn:string[]=[
-    'select',
     'fasilitasKODE',
     'fasilitasNAMA',
     'fasilitasGUNA',
+    'create_date',
+    'update_date',
     'update',
     'delete'
   ];
@@ -28,6 +32,8 @@ export class FasilitasComponent implements OnInit {
     'Kode Fasilitas',
     'Nama Fasilitas',
     'Kegunaan Fasilitas',
+    'Create Date',
+    'Update Date',
     'Update',
     'Delete'
   ];
@@ -54,8 +60,16 @@ export class FasilitasComponent implements OnInit {
   constructor(private fasilitasService:FasilitasService) { }
 
   ngOnInit() {
-    this.fasilitass = this.fasilitasService.fasilitass;
-    this.fasilitasObyeks = this.fasilitasService.fasilitasObyeks
+
+    this.load = true;
+    this.fasilitasService.getAllFasilitas();
+    this.fasilitasSubs = this.fasilitasService.loadFasilitas.subscribe((data:Fasilitas[])=>{
+      this.load  = false;
+      this.fasilitass = data;
+    })
   }
 
+  ngOnDestroy(){
+    this.fasilitasSubs.unsubscribe();
+  }
 }

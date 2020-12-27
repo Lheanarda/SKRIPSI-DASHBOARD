@@ -32,6 +32,14 @@ getAllKecamatan(){
   })
 }
 
+getAllKecamatanForOptions(){
+  return this.httpClient.get(`${environment.endpoint}/kecamatan`,{
+    headers:{
+      Authorization:environment.apiKey
+    }
+  })
+}
+
 getSingleKecamatan(kecamatanKODE:string){
   return this.httpClient.get(`${environment.endpoint}/kecamatan/${kecamatanKODE}`,{
     headers:{Authorization:environment.apiKey}

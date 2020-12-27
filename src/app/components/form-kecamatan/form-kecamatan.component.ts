@@ -54,6 +54,9 @@ export class FormKecamatanComponent implements OnInit {
           kecamatanKET:data.kecamatanKET,
           kabupatenKODE:data.kabupatenKODE
         })
+      },err=>{
+        this.loadData = false;
+        this.snackbar.open('Failed to get data, check your connection','Dismiss!');
       })
     }
   }
@@ -87,7 +90,7 @@ export class FormKecamatanComponent implements OnInit {
       this.kecService.addKecamatan(kecamatan).subscribe((response:any)=>{
         this.loading = false;
         const success = response.success;
-        if(success){
+        if(success && response.data){
           this.dialogRef.close();
           this.kecService.getAllKecamatan();
           this.snackbar.open(response.messages[0],'Dismiss!',{duration:3000});

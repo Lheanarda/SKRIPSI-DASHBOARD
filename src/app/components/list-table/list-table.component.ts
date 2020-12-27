@@ -1,3 +1,13 @@
+import { ImageService } from './../../services/image.service';
+import { FotoWisataService } from './../../services/foto-wisata.service';
+import { FasilitasObyekService } from './../../services/fasilitas-obyek.service';
+import { JarakService } from './../../services/jarak.service';
+import { BeritaService } from './../../services/berita.service';
+import { KegiatanService } from './../../services/kegiatan.service';
+import { KategoriberitaService } from './../../services/kategoriberita.service';
+import { FasilitasService } from './../../services/fasilitas.service';
+import { ObyekwisataService } from './../../services/obyekwisata.service';
+import { KategoriwisataService } from './../../services/kategoriwisata.service';
 import { environment } from './../../../environments/environment';
 import { KecamatanService } from 'src/app/services/kecamatan.service';
 import { Subscription } from 'rxjs';
@@ -56,10 +66,30 @@ export class ListTableComponent implements OnInit, OnDestroy {
   //subs
   kabupatenSubs:Subscription;
   kecamatanSubs:Subscription;
+  katWisataSubs:Subscription;
+  katBeritaSubs:Subscription;
+  obyekSubs:Subscription;
+  fasilitasSubs:Subscription;
+  kegiatanSubs:Subscription;
+  beritaSubs:Subscription;
+  jarakSubs:Subscription;
+  fasilObyekSubs:Subscription;
+  fotoObyekSubs:Subscription;
+
   constructor(
     public dialog:MatDialog ,
     private kabService:KabupatenService,
     private kecService:KecamatanService,
+    private katWisataService:KategoriwisataService,
+    private obyekService:ObyekwisataService,
+    private fasilitasService:FasilitasService,
+    private katBeritaService:KategoriberitaService,
+    private kegiatanService:KegiatanService,
+    private beritaService:BeritaService,
+    private jarakService:JarakService,
+    private fotoObyekService:FotoWisataService,
+    private fasilObyekService:FasilitasObyekService,
+    private imageService:ImageService,
     private snackbar:MatSnackBar) { }
 
   ngOnInit() {
@@ -71,7 +101,54 @@ export class ListTableComponent implements OnInit, OnDestroy {
       this.initiateDataSource(data);
     })
 
+    //kecamatan subs
     this.kecamatanSubs = this.kecService.loadKecamatan.subscribe((data:Kecamatan[])=>{
+      this.initiateDataSource(data);
+    });
+
+    //kategori wisata subs
+    this.katWisataSubs = this.katWisataService.loadKategoriWisata.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    });
+
+    //obyek wisata subs
+    this.obyekSubs = this.obyekService.loadObyekWisata.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    })
+
+
+    //fasil subs
+    this.fasilitasSubs = this.fasilitasService.loadFasilitas.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    });
+
+    //kategori berita
+    this.katBeritaSubs = this.katBeritaService.loadKategoriBerita.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    });
+
+    //kegiatan
+    this.kegiatanSubs = this.kegiatanService.loadKegiatan.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    });
+
+    //berita
+    this.beritaSubs = this.beritaService.loadBerita.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    });
+
+    //jarak
+    this.jarakSubs = this.jarakService.loadJarak.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    });
+
+    //fasil obyek
+    this.fasilObyekSubs = this.fasilObyekService.loadFasilitasObyek.subscribe((data:any)=>{
+      this.initiateDataSource(data);
+    });
+
+    //foto wisata
+    this.fotoObyekSubs = this.fotoObyekService.loadFotoWisata.subscribe((data:any)=>{
       this.initiateDataSource(data);
     })
   }
@@ -128,10 +205,10 @@ export class ListTableComponent implements OnInit, OnDestroy {
         dialogRef = this.dialog.open(FormBeritaComponent,{data:{title:this.title,mode:mode,id:el.beritaKODE},disableClose:true});
         break;
       case 'jarak antar wisata':
-        dialogRef = this.dialog.open(FormJarakComponent,{data:{title:this.title,mode:mode,el:el},disableClose:true});
+        dialogRef = this.dialog.open(FormJarakComponent,{data:{title:this.title,mode:mode,kodeASAL:el.obyekKODEasal,kodeTUJUAN:el.obyekKODEtujuan},disableClose:true});
         break;
       case 'fasilitas obyek wisata':
-        dialogRef = this.dialog.open(FormFasilitasObyekComponent,{data:{title:this.title,mode:mode,el:el},disableClose:true});
+        dialogRef = this.dialog.open(FormFasilitasObyekComponent,{data:{title:this.title,mode:mode,fasilitasKODE:el.fasilitasKODE,obyekKODE:el.obyekKODE},disableClose:true});
         break;
       case 'foto obyek wisata':
         dialogRef = this.dialog.open(FormFotoWisataComponent,{data:{title:this.title,mode:mode,id:el.fotoobyekKODE},disableClose:true});
@@ -150,10 +227,33 @@ export class ListTableComponent implements OnInit, OnDestroy {
               this.deleteLoading = false;
               this.snackbar.open(response.messages[0],'Dismiss!',{duration:3000})
               this.kabService.getAllKabupaten();
+              this.imageService.onDeleteImage(el.kabupatenFOTOICON);
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!')
             });
             break;
           case 'kategori berita':
-            console.log(el.kategoriberitaKODE);
+            this.deleteLoading = true;
+            this.katBeritaService.deleteKategoriBerita(el.kategoriberitaKODE).subscribe((res:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.katBeritaService.getAllKategoriBerita();
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation','Dismiss!')
+            })
+            break;
+          case 'kategori wisata':
+            this.deleteLoading = true;
+            this.katWisataService.deleteKategoriWisata(el.kategoriKODE).subscribe((res:any)=>{
+              this.deleteLoading=false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.katWisataService.getAllKategoriWisata();
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!')
+            })
             break;
           case 'kecamatan':
             this.deleteLoading = true;
@@ -162,7 +262,91 @@ export class ListTableComponent implements OnInit, OnDestroy {
               this.deleteLoading = false;
               this.snackbar.open(response.messages[0],'Dismiss!',{duration:3000});
               this.kecService.getAllKecamatan();
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!')
             });
+            break;
+          case 'obyek wisata':
+            this.deleteLoading = true;
+            this.obyekService.deleteObyekWisata(el.obyekKODE).subscribe((res:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.obyekService.getAllObyekWisata();
+              this.imageService.onDeleteImage(el.obyekFOTO);
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!')
+            })
+            break;
+          case 'fasilitas':
+            this.deleteLoading = true;
+            this.fasilitasService.deleteFasilitas(el.fasilitasKODE).subscribe((res:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.fasilitasService.getAllFasilitas();
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!');
+            })
+            break;
+          case 'kegiatan':
+            this.deleteLoading = true;
+            this.kegiatanService.deleteKegiatan(el.eventKODE).subscribe((res:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.kegiatanService.getAllKegiatan();
+              this.imageService.onDeleteImage(el.eventPOSTER);
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!');
+            })
+            break;
+          case 'berita':
+            this.deleteLoading = true;
+            this.beritaService.deleteBerita(el.beritaKODE).subscribe((res:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.beritaService.getAllBerita();
+              this.imageService.onDeleteImage(el.beritaGAMBAR);
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!');
+            })
+            break;
+          case 'jarak antar wisata':
+            this.deleteLoading = true;
+            this.jarakService.deleteJarakObyek(el.obyekKODEasal,el.obyekKODEtujuan).subscribe((res:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.jarakService.getAllJarakObyek();
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('constraint violation!','Dismiss!');
+            })
+            break;
+          case 'fasilitas obyek wisata':
+            this.deleteLoading = true;
+            this.fasilObyekService.deleteFasilitasObyek(el.fasilitasKODE,el.obyekKODE).subscribe((res:any)=>{
+              this.deleteLoading  = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.fasilObyekService.getAllFasilitasObyek();
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('Constraint violation','Dismiss!');
+            });
+            break;
+          case 'foto obyek wisata':
+            this.deleteLoading=true;
+            this.fotoObyekService.deleteFotoWisata(el.fotoobyekKODE).subscribe((res:any)=>{
+              this.deleteLoading = false;
+              this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+              this.fotoObyekService.getAllFotoWisata();
+              this.imageService.onDeleteImage(el.fotoobyekGAMBAR);
+            },err=>{
+              this.deleteLoading = false;
+              this.snackbar.open('Constraint violation','Dismiss!');
+            })
             break;
         }
       }
@@ -211,13 +395,39 @@ export class ListTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     if(this.kabupatenSubs){
-      console.log('list table kabupaten destroyed');
       this.kabupatenSubs.unsubscribe();
     }
 
     if(this.kecamatanSubs){
-      console.log("List Tabel kecamatan destroyed");
       this.kecamatanSubs.unsubscribe();
+    }
+    if(this.katWisataSubs){
+      this.katWisataSubs.unsubscribe();
+    }
+    if(this.obyekSubs){
+      this.obyekSubs.unsubscribe();
+    }
+    if(this.beritaSubs){
+      this.beritaSubs.unsubscribe();
+    }
+    if(this.katBeritaSubs){
+      this.katBeritaSubs.unsubscribe();
+    }
+    if(this.fasilitasSubs){
+      this.fasilitasSubs.unsubscribe();
+    }
+    if(this.kegiatanSubs){
+      this.kegiatanSubs.unsubscribe();
+    }
+    if(this.jarakSubs){
+      this.jarakSubs.unsubscribe();
+    }
+
+    if(this.fasilObyekSubs){
+      this.fasilObyekSubs.unsubscribe();
+    }
+    if(this.fotoObyekSubs){
+      this.fotoObyekSubs.unsubscribe();
     }
   }
 
