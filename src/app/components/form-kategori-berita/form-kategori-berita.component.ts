@@ -28,7 +28,7 @@ export class FormKategoriBeritaComponent implements OnInit {
 
   ngOnInit() {
     this.kategoriBeritaForm = new FormGroup({
-      kategoriberitaKODE:new FormControl(null,Validators.required),
+      kategoriberitaKODE:new FormControl(null,[Validators.required,Validators.minLength(4),Validators.maxLength(4)]),
       kategoriberitaNAMA:new FormControl(null,Validators.required),
       kategoriberitaKET:new FormControl(null)
     });

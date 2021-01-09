@@ -8,13 +8,15 @@ export default class UploadAdapter{
   http:HttpClient;
   endpoint:string;
   apiKey:string;
+  beritaFotos:string[];
 
-  constructor(loader,uploadIndicator,http,endpoint,apiKey){
+  constructor(loader,uploadIndicator,http,endpoint,apiKey,beritaFotos){
     this.loader = loader;
     this.uploadIndicator = uploadIndicator;
     this.http = http;
     this.endpoint = endpoint;
-    this.apiKey =apiKey
+    this.apiKey =apiKey;
+    this.beritaFotos = beritaFotos;
   }
 
   upload(){
@@ -24,7 +26,7 @@ export default class UploadAdapter{
       this.loader.file.then(file=>{
         //upload to server
         const fd = new FormData();
-        fd.append('image',file,file.name);
+        fd.append('image',file,'berita_'+ Date.now()+'_'+file.name);
         this.http.post(`${this.endpoint}/image`,fd,{
           headers:{
             Authorization:this.apiKey
@@ -32,8 +34,8 @@ export default class UploadAdapter{
         }).subscribe((res:any)=>{
           console.log(res);
           this.uploadIndicator.next('success');
+          this.beritaFotos.push(res.messages[0]);
           resolve({default:`${this.endpoint}/images/${res.messages[0]}`})
-          // resolve({default:'http://localhost/v1/images/Blue%20Tree.jpg'})
         },err=>{
           this.uploadIndicator.next('failed');
         })
@@ -47,6 +49,5 @@ export default class UploadAdapter{
   abort(){
     console.log('Upload Abort!');
     this.uploadIndicator.next('failed');
-
   }
 }

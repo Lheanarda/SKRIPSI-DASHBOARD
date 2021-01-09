@@ -13,6 +13,9 @@ export class BeritaService {
 
   constructor(private http:HttpClient,private snackbar:MatSnackBar) { }
 
+  //ctrl foto berita
+  beritaFotos:string[]=[];
+
   loadBerita = new Subject<Berita[]>();
   uploadIndicator = new Subject<any>();
 
@@ -28,6 +31,8 @@ export class BeritaService {
       }else{
         this.snackbar.open('Failed to Fetch Data','Dismiss!',{duration:3000});
       }
+    },err=>{
+      this.snackbar.open('Check your network and try again','Dismiss!')
     })
   }
 
@@ -78,5 +83,23 @@ export class BeritaService {
     return this.http.delete(`${environment.endpoint}/berita/${beritaKODE}`,{
       headers:{Authorization:environment.apiKey}
     });
+  }
+
+  addBulkFotoBerita(fotos:string[],beritaKODE:string){
+    return this.http.post(`${environment.endpoint}/fotoberita`,{
+      fotos:fotos,
+      beritaKODE:beritaKODE
+    },{
+      headers:{Authorization:environment.apiKey}
+    })
+  }
+
+  deleteBulkFotoBerita(fotos:string[]){
+    return this.http.request('delete', `${environment.endpoint}/fotoberita`,{
+      headers:{Authorization:environment.apiKey},
+      body:{
+        fotos:fotos
+      }
+    })
   }
 }

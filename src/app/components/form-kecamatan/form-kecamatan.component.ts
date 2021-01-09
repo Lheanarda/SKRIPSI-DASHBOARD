@@ -35,7 +35,7 @@ export class FormKecamatanComponent implements OnInit {
 
     this.loadKabupaten();
     this.kecamatanForm = new FormGroup({
-      'kecamatanKODE':new FormControl(null,Validators.required),
+      'kecamatanKODE':new FormControl(null,[Validators.required,Validators.minLength(8),Validators.maxLength(8)]),
       'kecamatanNAMA':new FormControl(null,Validators.required),
       'kecamatanALAMAT':new FormControl(null,Validators.required),
       'kecamatanKET':new FormControl(null),
@@ -98,6 +98,7 @@ export class FormKecamatanComponent implements OnInit {
           this.snackbar.open('Failed to insert data','Dismiss!',{duration:3000});
         }
       },err=>{
+        this.loading = false;
         this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
       })
     }else{
@@ -113,6 +114,7 @@ export class FormKecamatanComponent implements OnInit {
           this.snackbar.open('Failed to update data','Dismiss!',{duration:3000});
         }
       },err=>{
+        this.loading = false;
         this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
       });
     }

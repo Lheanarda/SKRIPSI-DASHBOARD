@@ -10,6 +10,7 @@
 
   mat-card{
     width: 50vw;
+    padding: 3rem;
     button{
       background-color: var(--color-primary-dark);
       color: white;
@@ -17,4 +18,12 @@
   }
 }
 
+.login{
+  color: var(--color-primary);
+  cursor: pointer;
+  margin-top: 1rem;
+}
 
+.err{
+  color: var(--color-red);
+}

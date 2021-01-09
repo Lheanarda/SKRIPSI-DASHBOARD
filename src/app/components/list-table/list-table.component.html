@@ -80,12 +80,19 @@ title==='Fasilitas Obyek Wisata' }">
                     !helperConditionListTable(displayedColumn,'beritaTGL') &&
                     !helperConditionListTable(displayedColumn,'create_date')&&
                     !helperConditionListTable(displayedColumn,'update_date') &&
-                    !helperConditionListTable(displayedColumn,'fotoobyekTGLAMBIL')"
+                    !helperConditionListTable(displayedColumn,'fotoobyekTGLAMBIL') &&
+                    !helperConditionListTable(displayedColumn,'obyekJAMBUKA') &&
+                    !helperConditionListTable(displayedColumn,'obyekJAMTUTUP')"
                     class="display-values">
                       {{ element[displayedColumn]  &&  (element[displayedColumn].length>50) ?
                         (element[displayedColumn] | slice:0:60)+'...':
                         element[displayedColumn]}}
 
+                    </div>
+
+                    <div *ngIf="helperConditionListTable(displayedColumn,'obyekJAMBUKA') ||
+                    helperConditionListTable(displayedColumn,'obyekJAMTUTUP')" class="display-values">
+                    {{ (element[displayedColumn] | slice:0:5)}}
                     </div>
                     <div *ngIf="helperConditionListTable(displayedColumn, 'eventMULAI') ||
                     helperConditionListTable(displayedColumn,'eventSELESAI')||

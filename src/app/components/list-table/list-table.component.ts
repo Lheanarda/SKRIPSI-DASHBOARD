@@ -310,6 +310,7 @@ export class ListTableComponent implements OnInit, OnDestroy {
               this.beritaService.getAllBerita();
               this.imageService.onDeleteImage(el.beritaGAMBAR);
             },err=>{
+              console.log(err);
               this.deleteLoading = false;
               this.snackbar.open('constraint violation!','Dismiss!');
             })

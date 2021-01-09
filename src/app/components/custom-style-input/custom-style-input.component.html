@@ -5,17 +5,9 @@
   class="form-input"
   placeholder={{placeholder}}
   id={{placeholder}}
+  [formControl]="inputControl"
   autocomplete="off"
   required>
-  <button
-  type="button"
-  mat-icon-button
-  class="form-input--clear"
-  [ngStyle]="{right:placeholder=='Password'?'var(--text-password-position)':'var(--text-normal-position)'}"
-  *ngIf="inputControl.value"
-  (click)="inputControl.setValue('')">
-    <mat-icon>clear</mat-icon>
-  </button>
   <button
   mat-icon-button
   class="form-input--visibility"

@@ -54,7 +54,7 @@
     <div class="buttons full-width">
       <button mat-button mat-raised-button mat-dialog-close>Close</button>
       <button mat-button mat-raised-button type="reset" >Reset</button>
-      <button mat-button mat-raised-button>Submit</button>
+      <button mat-button mat-raised-button [disabled]="kategoriWisataForm.invalid">Submit</button>
       <mat-spinner [diameter]="20" *ngIf="loading" ></mat-spinner>
     </div>
   </div>

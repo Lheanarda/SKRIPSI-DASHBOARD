@@ -3,14 +3,11 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Pesona Jawa</mat-toolbar>
+    <mat-toolbar>Jawa Travels</mat-toolbar>
     <div class="user">
-      <div class="user__name">Alexander Leonardo Kurniawan</div>
-      <div class="user__email">alexanderleo0499@gmail.com</div>
+      <div class="user__name">{{pengelola.pengelolaNAMA1}}</div>
+      <div class="user__email">{{pengelola.pengelolaEMAIL}}</div>
     </div>
-
-
-
     <mat-nav-list>
       <a mat-list-item routerLink="/laporan" routerLinkActive="nav--active">
         <mat-icon matListIcon>leaderboard</mat-icon>
@@ -53,6 +50,10 @@
         <mat-list-item routerLink="/kegiatan" routerLinkActive="nav--active">Kegiatan</mat-list-item>
       </mat-list>
 
+      <a mat-list-item (click)="onLogout()">
+        <mat-icon matListIcon>exit_to_app</mat-icon>
+        <div class="nav-item">Logout</div>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

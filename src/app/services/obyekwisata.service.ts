@@ -1,5 +1,4 @@
 import { environment } from './../../environments/environment';
-import { FotoWisata } from './../model/fotowisata.model';
 import { ObyekWisata } from './../model/obyek-wisata.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -12,25 +11,6 @@ import { Subject } from 'rxjs';
 export class ObyekwisataService {
 
 
-
-fotoWisatas:FotoWisata[]=[
-  {
-    fotoobyekKODE:1,
-    fotoobyekNAMA:'Candi Borobudur',
-    fotoobyekKET:'Pintu Masuk Candi Borobudur',
-    fotoobyekTGLAMBIL:new Date(),
-    obyekKODE:'candi prambanan',
-    fotoobyekGAMBAR:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Borobudur_Stupa_Merapi.jpg'
-  },
-  {
-    fotoobyekKODE:1,
-    fotoobyekNAMA:'Candi Borobudur',
-    fotoobyekKET:'Pintu Masuk Candi Borobudur',
-    fotoobyekTGLAMBIL:new Date(),
-    obyekKODE:'candi prambanan',
-    fotoobyekGAMBAR:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Borobudur_Stupa_Merapi.jpg'
-  }
-]
   constructor(private http:HttpClient,private snackbar:MatSnackBar) { }
 
   loadObyekWisata = new Subject<ObyekWisata[]>();
@@ -48,7 +28,7 @@ fotoWisatas:FotoWisata[]=[
         this.snackbar.open('Failed to fetch data','Dismiss',{duration:3000});
       }
     },err=>{
-      this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000})
+      this.snackbar.open('Check your network and try again','Dismiss!')
     })
   }
 

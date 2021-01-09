@@ -18,7 +18,6 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 import * as DecoupledEditor from '@omretterry/ckeditor5-build-decoupled-document-imageresize';
 import UploadAdapter from 'src/app/shared/UploadAdapter';
 import { HttpClient } from '@angular/common/http';
-import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-form-berita',
   templateUrl: './form-berita.component.html',
@@ -44,6 +43,7 @@ export class FormBeritaComponent implements OnInit,OnDestroy {
   //image ctrl
   currentImageFile:any;
   firstImage:string;
+  submitted:boolean;
 
   //options
   kabupatens:Kabupaten[];
@@ -77,7 +77,7 @@ export class FormBeritaComponent implements OnInit,OnDestroy {
       })
     })
     this.beritaForm = new FormGroup({
-      beritaKODE:new FormControl(null,Validators.required),
+      beritaKODE:new FormControl(null,[Validators.required,Validators.maxLength(11)]),
       beritaJUDUL:new FormControl(null,Validators.required),
       beritaISI:new FormControl(null,Validators.required),
       beritaGAMBAR:new FormControl(null,Validators.required),
@@ -152,12 +152,17 @@ export class FormBeritaComponent implements OnInit,OnDestroy {
 
     editor.plugins.get('FileRepository').createUploadAdapter = (loader)=>{
       //uplaod adapter
-      return new UploadAdapter(loader,this.beritaService.uploadIndicator,this.http, environment.endpoint,environment.apiKey);
+      return new UploadAdapter(loader,this.beritaService.uploadIndicator,this.http, environment.endpoint,environment.apiKey,this.beritaService.beritaFotos);
     }
   }
   onEditorChange({editor}:ChangeEvent){
     if(editor){
-      this.beritaForm.patchValue({beritaISI:editor.getData()});
+      if(editor.getData()){
+        this.beritaForm.patchValue({beritaISI:editor.getData()});
+      }else{
+        this.beritaForm.patchValue({beritaISI:' '});
+      }
+
     }
   }
 
@@ -171,6 +176,7 @@ export class FormBeritaComponent implements OnInit,OnDestroy {
           this.dialogRef.close();
           this.beritaService.getAllBerita();
           this.snackbar.open('Berita has been added','Dismiss!',{duration:3000});
+          this.submitted = true;
         }
       },err=>{
         this.loading = false;
@@ -183,7 +189,8 @@ export class FormBeritaComponent implements OnInit,OnDestroy {
         if(res.success && res.data){
           this.dialogRef.close();
           this.beritaService.getAllBerita();
-          this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000})
+          this.snackbar.open(res.messages[0],'Dismiss!',{duration:3000});
+          this.submitted = true;
         }else{
           this.snackbar.open(`${res.messages[0]}`,'Dismiss!',{duration:3000});
         }
@@ -220,8 +227,21 @@ export class FormBeritaComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(){
+    console.log(this.beritaService.beritaFotos);
     if(this.uploadSubs){
       this.uploadSubs.unsubscribe();
+    }
+    if(this.submitted){
+      //save image
+      this.beritaService.addBulkFotoBerita(this.beritaService.beritaFotos,this.beritaForm.value.beritaKODE).subscribe((res:any)=>{
+        console.log(res);
+        this.beritaService.beritaFotos = [];
+      });
+    }else{
+      //delete image
+      this.beritaService.deleteBulkFotoBerita(this.beritaService.beritaFotos).subscribe((res:any)=>{
+        console.log(res);
+      })
     }
   }
 

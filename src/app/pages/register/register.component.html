@@ -1,29 +1,45 @@
 <div class="auth-background">
-  <mat-card>
-    <mat-card-title>Registrasi Pengelola</mat-card-title>
-    <hr>
-    <mat-card-content>
-      <mat-form-field class="full-width">
-        <mat-label>Nama Depan</mat-label>
-        <input matInput placeholder="Ex. John"/>
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <mat-label>Nama Belakang</mat-label>
-        <input matInput placeholder="Ex. Doe"/>
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput placeholder="Ex. John@gmail.com"/>
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <mat-label>Password</mat-label>
-        <input type="password" matInput placeholder="Ex. ******"/>
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <mat-label>Password Confirmation</mat-label>
-        <input type="password"matInput  placeholder="Ex. ******"/>
-      </mat-form-field>
-      <button mat-raised-button style="float: right;">Register</button>
-    </mat-card-content>
-  </mat-card>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <mat-card>
+      <mat-card-title>Registrasi Pengelola</mat-card-title>
+      <hr>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Nama Depan</mat-label>
+          <input matInput placeholder="Ex. John" formControlName="pengelolaNAMA1"/>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Nama Belakang</mat-label>
+          <input matInput placeholder="Ex. Doe" formControlName="pengelolaNAMA2" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput placeholder="Ex. John@gmail.com"
+          formControlName="pengelolaEMAIL"
+          />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput placeholder="Ex. ******"
+          formControlName="pengelolaPASSWORD"
+          />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Password Confirmation</mat-label>
+          <input type="password"matInput  placeholder="Ex. ******"
+          formControlName="pengelolaKONFIRMASI"
+          />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Registration Code</mat-label>
+          <input type="text"matInput  placeholder="Ex. KODE"
+          formControlName="pengelolaKEY"
+          />
+        </mat-form-field>
+        <button mat-raised-button style="float: right;" type="submit" [disabled]="!registerForm.valid" class="mb-3">Register</button>
+        <span class="login"routerLink="/login" >Already have an account? Login</span>
+        <div class="err" *ngIf="errMsg">{{errMsg}} </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
 </div>

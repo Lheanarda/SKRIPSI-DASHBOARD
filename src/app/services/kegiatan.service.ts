@@ -26,7 +26,7 @@ export class KegiatanService {
         this.snackbar.open('Failed to fetchd data','Dismiss!',{duration:3000});
       }
     },err=>{
-      this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
+      this.snackbar.open('Check your network and try again','Dismiss!');
     })
   }
 

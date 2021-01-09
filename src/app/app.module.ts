@@ -44,6 +44,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatMomentDateModule,MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -95,6 +96,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    MatMomentDateModule
   ],
   entryComponents:[
     FormFasilitasComponent,
@@ -108,9 +110,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormBeritaComponent,
     FormJarakComponent,
     FormFasilitasObyekComponent,
-    FormFotoWisataComponent
+    FormFotoWisataComponent,
+
     ],
-  providers: [],
+  providers: [{ provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

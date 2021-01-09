@@ -1,3 +1,5 @@
+import { Pengelola } from './../../model/pengelola.model';
+import { AuthService } from './../../services/auth.service';
 import { NavigationService } from './../../services/navigation.service';
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -18,11 +20,17 @@ export class NavigationComponent implements OnInit {
     );
 
   navigationState;
+  pengelola:Pengelola;
 
-  constructor(private breakpointObserver: BreakpointObserver, private navService:NavigationService) {}
+  constructor(private breakpointObserver: BreakpointObserver, private navService:NavigationService, private authService:AuthService) {}
 
   ngOnInit(){
     this.navigationState = this.navService.navigationState;
+    this.pengelola = this.authService.loggedInUser;
+  }
+
+  onLogout(){
+    this.authService.onLogout();
   }
 
 }

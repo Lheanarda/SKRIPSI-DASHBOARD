@@ -18,7 +18,7 @@
   box-shadow: 0 1.5rem 4rem rgba(#000,.2);
   background-image:
   linear-gradient(78deg, transparent 50%, rgba(255,255,255,.9) 50% ),
-  url(https://www.gogonesia.com/img/city/jawatengah-1427352345.jpg);
+  url(../../../assets/background.jpg);
   background-size: cover;
   position: relative;
 }
@@ -57,7 +57,7 @@
 /* ERROR MESSAGE */
 .auth__form--err{
   margin: 0 auto;
-  color: var(--color-red-light);
+  color: var(--color-red);
 }
 
 /* BUTTON */
@@ -98,6 +98,24 @@
   position: relative;
   transition: all .2s;
   font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.auth__register{
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  padding: 1.5rem ;
+  font-size: 1.6rem;
+  border-radius: 10rem;
+  color: #fff;
+  align-self: flex-end;
+  margin-right: 10%;
+  position: relative;
+  color: var(--color-primary);
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: flex-start;

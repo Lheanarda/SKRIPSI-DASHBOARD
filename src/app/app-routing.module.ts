@@ -1,3 +1,4 @@
+import { LoginGuard } from './guard/login.guard';
 import { FotoObyekComponent } from './pages/foto-obyek/foto-obyek.component';
 import { FasilitasObyekComponent } from './pages/fasilitas-obyek/fasilitas-obyek.component';
 import { JarakComponent } from './pages/jarak/jarak.component';
@@ -14,28 +15,29 @@ import { BeritaComponent } from './pages/berita/berita.component';
 import { LaporanComponent } from './pages/laporan/laporan.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guard/auth.guard';
 
 const appRoutes:Routes=[
   {path:'',redirectTo:'/laporan', pathMatch:'full'},
-  {path:'laporan', component:LaporanComponent},
-  {path:'berita',component:BeritaComponent},
-  {path:'fasilitas',component:FasilitasComponent},
-  {path:'kabupaten',component:KabupatenComponent},
-  {path:'kategori-berita', component:KategoriBeritaComponent},
-  {path:'kategori-wisata',component:KategoriWisataComponent},
-  {path:'login',component:LoginComponent},
-  {path:'kecamatan',component:KecamatanComponent},
-  {path:'register',component:RegisterComponent},
-  {path:'wisata',component:WisataComponent},
-  {path:'kegiatan',component:KegiatanComponent},
-  {path:'jarak',component:JarakComponent},
-  {path:'fasilitas-obyek',component:FasilitasObyekComponent},
-  {path:'foto-obyek',component:FotoObyekComponent},
+  {path:'laporan', component:LaporanComponent, canActivate:[AuthGuard]},
+  {path:'berita',component:BeritaComponent, canActivate:[AuthGuard]},
+  {path:'fasilitas',component:FasilitasComponent, canActivate:[AuthGuard]},
+  {path:'kabupaten',component:KabupatenComponent, canActivate:[AuthGuard]},
+  {path:'kategori-berita', component:KategoriBeritaComponent, canActivate:[AuthGuard]},
+  {path:'kategori-wisata',component:KategoriWisataComponent, canActivate:[AuthGuard]},
+  {path:'login',component:LoginComponent, canActivate:[LoginGuard]},
+  {path:'kecamatan',component:KecamatanComponent, canActivate:[AuthGuard]},
+  {path:'register',component:RegisterComponent, canActivate:[LoginGuard]},
+  {path:'wisata',component:WisataComponent, canActivate:[AuthGuard]},
+  {path:'kegiatan',component:KegiatanComponent, canActivate:[AuthGuard]},
+  {path:'jarak',component:JarakComponent, canActivate:[AuthGuard]},
+  {path:'fasilitas-obyek',component:FasilitasObyekComponent, canActivate:[AuthGuard]},
+  {path:'foto-obyek',component:FotoObyekComponent, canActivate:[AuthGuard]},
 ]
 
 @NgModule({
   imports:[
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes,{useHash:true})
   ],
   exports:[
     RouterModule

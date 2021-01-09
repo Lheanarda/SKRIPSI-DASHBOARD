@@ -32,7 +32,7 @@ export class FormKabupatenComponent implements OnInit {
 
   ngOnInit() {
     this.kabupatenForm = new FormGroup({
-      'kabupatenKODE':new FormControl(null,Validators.required),
+      'kabupatenKODE':new FormControl(null,[Validators.required,Validators.minLength(5),Validators.maxLength(5)]),
       'kabupatenNAMA':new FormControl(null,Validators.required),
       'kabupatenALAMAT':new FormControl(null,Validators.required),
       'kabupatenKET':new FormControl(null),

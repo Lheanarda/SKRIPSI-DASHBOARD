@@ -97,6 +97,7 @@ export class FormJarakComponent implements OnInit {
           this.snackbar.open('Failed to insert data','Dismiss!',{duration:3000});
         }
       },err=>{
+        this.loading = false;
         this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000})
       })
     }else{
@@ -111,6 +112,7 @@ export class FormJarakComponent implements OnInit {
           this.snackbar.open('Failed to update data','Dismiss!',{duration:3000});
         }
       },err=>{
+        this.loading = false;
         this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
       })
     }

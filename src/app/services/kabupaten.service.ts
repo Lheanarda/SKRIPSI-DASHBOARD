@@ -29,7 +29,7 @@ getAllKabupaten(){
       this.snackbar.open('Failed To Fetch Data','Dismiss!',{duration:3000})
     }
   },err=>{
-    this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000})
+    this.snackbar.open('Check your network and try again','Dismiss!')
   })
 }
 

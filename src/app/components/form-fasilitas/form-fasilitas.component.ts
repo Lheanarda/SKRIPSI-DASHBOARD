@@ -29,7 +29,7 @@ export class FormFasilitasComponent implements OnInit {
   ngOnInit() {
 
     this.fasilitasForm = new FormGroup({
-      fasilitasKODE:new FormControl('',Validators.required),
+      fasilitasKODE:new FormControl('',[Validators.required,Validators.minLength(4),Validators.maxLength(4)]),
       fasilitasNAMA:new FormControl('',Validators.required),
       fasilitasGUNA:new FormControl('',Validators.required)
     });
@@ -70,6 +70,9 @@ export class FormFasilitasComponent implements OnInit {
         }else{
           this.snackbar.open('Failed to insert data','Dismiss!',{duration:3000});
         }
+      },err=>{
+        this.loading = false;
+        this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
       })
     }else{
       //update fasilitas
@@ -83,6 +86,7 @@ export class FormFasilitasComponent implements OnInit {
           this.snackbar.open('Failed to update data','Dismiss!',{duration:3000});
         }
       },err=>{
+        this.loading = false;
         this.snackbar.open(err.error.messages[0],'Dismiss!',{duration:3000});
       })
     }

@@ -76,36 +76,11 @@ export class WisataComponent implements OnInit,OnDestroy {
     'Delete'
   ];
 
-  //foto wisata
-  fotoobyeks:FotoWisata[];
-  displayedColumnsFoto:string[]=[
-    'select',
-    'fotoobyekGAMBAR',
-    'fotoobyekKODE',
-    'fotoobyekNAMA',
-    'fotoobyekKET',
-    'fotoobyekTGLAMBIL',
-    'obyekKODE',
-    'update',
-    'delete'
-  ];
-  headerColumnsFoto:string[]=[
-    'Gambar Wisata',
-    'Kode Foto',
-    'Nama Foto',
-    'Keterangan Foto',
-    'Tanggal Ambil Foto',
-    'Nama Wisata',
-    'Update',
-    'Delete'
-  ]
-
 
   constructor(private wisataService:ObyekwisataService) { }
 
   ngOnInit() {
-    this.fotoobyeks = this.wisataService.fotoWisatas;
-
+    this.load = true;
     this.wisataService.getAllObyekWisata();
     this.obyekSubs = this.wisataService.loadObyekWisata.subscribe((data:ObyekWisata[])=>{
       this.load = false;
